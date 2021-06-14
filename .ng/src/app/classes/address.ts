@@ -42,7 +42,7 @@ export class Address{ // address class, can be used to set defult values
         this.preferred =  true;
         this.segment_type = data.segment_type ? data.segment_type : "External";
         
-        this.address_type = [{value:"alternative", desc:"Alternative"}];
+        this.address_type = [{value:"home", desc:"Home"}];
         
     }
     
