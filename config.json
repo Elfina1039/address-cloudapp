@@ -1,0 +1,8 @@
+{
+   "title": "address-cloudapp",
+   "subtitle": "address manager for Alma",
+   "author": "Marie Vaňková",
+   "env": "https://sandbox03-eu.alma.exlibrisgroup.com/institution/420CKIS_INST",
+   "port": 4200,
+   "name": "address-cloudapp"
+}
