@@ -100,13 +100,16 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
           let ref = this;
         let disable : boolean = true;
         let result : boolean = false;
-        this.userData.contact_info.address.forEach((a)=>{
-           disable = ref.allowEdit(a);
-            if(disable==false){
-                result = true;
-            }
-        });
-        return result;
+        if (this.userData && this.userData.contact_info && this.userData.contact_info.address) {
+          this.userData.contact_info.address.forEach((a)=>{
+            disable = ref.allowEdit(a);
+             if(disable==false){
+                 result = true;
+             }
+         });
+         return result;
+        }
+
     }
 
 

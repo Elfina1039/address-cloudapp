@@ -1,6 +1,6 @@
 export interface ValDesc{ //the interface for address.country and address.type[]
     value: string;
-    desc: string;
+    desc?: string;
 }
 
 export class Address{ // address class, can be used to set defult values

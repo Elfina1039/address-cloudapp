@@ -14,7 +14,7 @@ import {ErrorStateMatcher} from '@angular/material/core';
 import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog'; 
 import { DialogComponent } from '../dialog/dialog.component';
-
+import { MatSelectChange } from '@angular/material/select'
 
 @Component({
   selector: 'app-address-form',
@@ -92,6 +92,10 @@ export class AddressFormComponent implements OnInit, OnDestroy{
         this.address.country.desc = desc.desc;
     }
     
+    updateAddressType(event: MatSelectChange) {
+      this.address.address_type = [ { value: event.value } ]
+    }
+
 confirm(){ // open dialog asking for confirmation
     let address = this.address;
     let userId = this.userData.primary_id;
