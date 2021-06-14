@@ -1,0 +1,79 @@
+<form #form=ngForm>
+    <div class="eca-actions">
+        
+        <button mat-flat-button [routerLink]="['/']" color="secondary">Home</button>
+        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">Back</button>
+        <button mat-flat-button color="primary" (click)="update()" *ngIf="action=='Edit'" [disabled]="form.invalid">Update</button>
+        <button mat-flat-button color="primary" (click)="add()" *ngIf="action=='Add'">Add</button>
+    </div>
+
+    <mat-card>
+        <mat-card-header color="primary">
+            <mat-card-title>{{action}} address</mat-card-title>
+            <mat-card-subtitle>{{userData.full_name}} ({{userData.primary_id}})</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <mat-form-field>
+                <mat-label>Street and house number</mat-label>
+                <input required pattern="[^\d]+[0-9]{1,5}" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
+                <mat-error *ngIf="line1.errors?.required">
+                    This field is required.
+                </mat-error>
+                 <mat-error *ngIf="line1.errors?.pattern && !line1.errors?.required">
+                    Please enter street name + number.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>City</mat-label>
+                <input required matInput placeholder="city" name="line2" [(ngModel)]="address.line2" #line2="ngModel">
+                 <mat-error *ngIf="line2.errors?.required">
+                    This field is required.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Country</mat-label>
+                <input disabled="true" matInput placeholder="country" name="line4" [(ngModel)]="address.line4">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Postal code</mat-label>
+                <input matInput required pattern="[0-9]{3}\s[0-9]{2}" placeholder="postal code" name="postal_code" [(ngModel)]="address.postal_code" (keydown)="formatPostalCode(address.postal_code)" #postal_code="ngModel">
+                <mat-error *ngIf="postal_code.errors?.required">
+                    This field is required.
+                </mat-error>
+                <mat-error *ngIf="postal_code.errors?.pattern && !postal_code.errors?.required">
+                    Please enter a valid postal code.
+                </mat-error>
+            </mat-form-field>
+        
+
+           <!-- <mat-form-field appearance="fill">
+                <mat-label>Country</mat-label>
+                <mat-select required name="country" [(ngModel)]="address.country.value" (change)="updateCountry()">
+                    <mat-option *ngFor="let c of data.countries" [value]="c.value">
+                        {{c.desc}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>-->
+            <br />
+
+            <mat-checkbox [(ngModel)]="address.preferred" name="preferred" labelPosition="before" disabled="true">
+                Preferred
+            </mat-checkbox>
+
+
+
+        </mat-card-content>
+
+
+    </mat-card>
+
+</form>
+
+<footer>
+
+</footer>

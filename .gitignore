@@ -1,3 +1,7 @@
+#eca
+build/
+.ng/
+
 # Logs
 logs
 *.log
