@@ -67,8 +67,8 @@
 
             <mat-form-field>
                 <mat-label>Address Type</mat-label>
-                <mat-select name="address_type" (selectionChange)="updateAddressType($event)">
-                  <mat-option *ngFor="let addressType of data.addressTypes" [value]="addressType.code">{{ addressType.description }}</mat-option>
+                <mat-select name="address_type" [(ngModel)]="address.address_type" multiple>
+                  <mat-option *ngFor="let addressType of data.addressTypes" [value]="{value: addressType.code}">{{ addressType.description }}</mat-option>
                 </mat-select>
             </mat-form-field>  
 
