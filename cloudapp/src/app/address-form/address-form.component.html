@@ -65,7 +65,12 @@
                 Preferred
             </mat-checkbox>
 
-
+            <mat-form-field>
+                <mat-label>Address Type</mat-label>
+                <mat-select name="address_type" (selectionChange)="updateAddressType($event)">
+                  <mat-option *ngFor="let addressType of data.addressTypes" [value]="addressType.code">{{ addressType.description }}</mat-option>
+                </mat-select>
+            </mat-form-field>  
 
         </mat-card-content>
 
@@ -74,6 +79,3 @@
 
 </form>
 
-<footer>
-
-</footer>
