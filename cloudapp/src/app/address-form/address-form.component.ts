@@ -134,7 +134,8 @@ add(){ // add the new address to userData and call save
 } 
     
   save() { // sent the PUT request to Alma API
-    const requestBody = JSON.parse(JSON.stringify(this.userData));
+    const requestBody = this.userData;
+      console.log(JSON.stringify(requestBody));
     this.loading = true;
     let request: Request = {
       url: this.userLink, 
