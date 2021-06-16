@@ -92,9 +92,6 @@ export class AddressFormComponent implements OnInit, OnDestroy{
         this.address.country.desc = desc.desc;
     }
     
-    updateAddressType(event: MatSelectChange) {
-      this.address.address_type = [ { value: event.value } ]
-    }
 
 confirm(){ // open dialog asking for confirmation
     let address = this.address;
