@@ -27,7 +27,7 @@ export class MainComponent implements OnInit, OnDestroy {
     private eventsService: CloudAppEventsService,
     private alert: AlertService,
     private router : Router,
-    private data : DataService,
+    public data : DataService,
   ) { }
 
   ngOnInit() { //subscribe to the Entities observable to access data on the main page

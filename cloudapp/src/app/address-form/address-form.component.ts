@@ -45,7 +45,7 @@ export class AddressFormComponent implements OnInit, OnDestroy{
       private config: CloudAppConfigService,
     private route: ActivatedRoute, 
     private router : Router,
-     private data : DataService,
+     public data : DataService,
      public dialog: MatDialog
   ) {
   
