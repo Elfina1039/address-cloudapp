@@ -12,11 +12,11 @@
                 <span class="uxf-icon uxf-check" *ngIf="a.preferred"></span>   {{a.line1}}
             </mat-panel-title>
             <mat-panel-description>
-                <mat-chip-list class="mat-chip-list-stacked" aria-label="Address types">
-                    <mat-chip *ngFor="let type of a.address_type" color="primary">
-                        {{type.desc}}
-                    </mat-chip>
-                </mat-chip-list>
+             -
+                    <span *ngFor="let type of a.address_type" color="primary">
+                        {{type.desc}}-
+                    </span>
+            
 
             </mat-panel-description>
 
@@ -33,7 +33,7 @@
 </ng-container>
 
 
-<button mat-icon-button aria-label="add" color="primary" (click)="redirectToAdd()" [disabled]="allowAdding()">
+<button mat-icon-button aria-label="add" color="primary" (click)="redirectToAdd()">
     <span class="uxf-icon uxf-plus-circle"></span>
 </button>
 

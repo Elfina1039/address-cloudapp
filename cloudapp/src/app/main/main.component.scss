@@ -32,3 +32,9 @@ pre,
 textarea {
   font-size: 0.9em;
 }
+
+footer{
+    display:flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}

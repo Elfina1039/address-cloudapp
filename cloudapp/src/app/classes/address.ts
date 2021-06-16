@@ -28,7 +28,7 @@ export class Address{ // address class, can be used to set defult values
       this.line1 = data.line1 ? data.line1 : "";
          this.line2 = data.line2 ? data.line2 : "";
          this.line3 = data.line3 ? data.line3 : "";
-         this.line4 =  "Česká republika";
+         this.line4 =  data.line4 ? data.line4 : "Česká republika";
         
          this.city = data.city ? data.city : "";
          this.state_province = data.state_province ? data.state_province : "";
@@ -42,7 +42,7 @@ export class Address{ // address class, can be used to set defult values
         this.preferred =  true;
         this.segment_type = data.segment_type ? data.segment_type : "External";
         
-        this.address_type = [{value:"alternative", desc:"Alternative"}];
+        this.address_type = data.address_type ? data.address_type : [{value:"alternative", desc:"Alternative"}];
         
     }
     

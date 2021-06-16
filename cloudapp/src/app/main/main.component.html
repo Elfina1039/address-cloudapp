@@ -1,4 +1,4 @@
-  <h1>Select user</h1>
+  <h1>{{data.language.select_user}}</h1>
 
 <ng-container 
   *ngIf="(entities$ | async)?.length > 0; then entities; else noentities"
@@ -21,3 +21,10 @@
 <div class="loading-shade" *ngIf="loading">
   <mat-spinner diameter="50"></mat-spinner>
 </div>
+
+<footer>
+   
+    <button *ngIf="data.language.language!='Czech'" mat-flat-button color="primary" (click)="data.switchLanguage('czech')">Czech</button>
+    
+    <button *ngIf="data.language.language!='English'" mat-flat-button color="primary" (click)="data.switchLanguage('english')">English</button>
+</footer>

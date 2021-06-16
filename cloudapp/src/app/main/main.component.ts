@@ -6,6 +6,8 @@ import { CloudAppRestService, CloudAppEventsService, Request, HttpMethod,
 import { MatRadioChange } from '@angular/material/radio';
 import {  Router } from '@angular/router';
 
+import { DataService } from "../data.service";
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -24,7 +26,8 @@ export class MainComponent implements OnInit, OnDestroy {
     private restService: CloudAppRestService,
     private eventsService: CloudAppEventsService,
     private alert: AlertService,
-    private router : Router
+    private router : Router,
+    private data : DataService,
   ) { }
 
   ngOnInit() { //subscribe to the Entities observable to access data on the main page
