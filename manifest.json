@@ -3,7 +3,7 @@
    "title": "Address manager",
    "subtitle": "Address manager for Alma",
    "author": "Marie Vaňková",
-   "description": "Provides a simple interface for adding and editing user addresses",
+   "description": "Please note that this is a beta version of the app,  intended for internal testing only. Installation is not recommended at the moment. The app provides a simple interface for adding and editing user addresses.",
    "icon": {
       "type": "url",
       "value": "/assets/icon.png"

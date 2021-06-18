@@ -14,13 +14,27 @@ export class DataService {
  countries : any;
  addressTypes = [];
  language : any;
+    
+langData : any = {};
 
   constructor(private http: HttpClient, private restService: CloudAppRestService) {
       let ref = this;
       //load the list of countries used in <select>
-  this.http.get("/assets/countries.json").subscribe((data)=>{
-      ref.countries = data;
-  });
+ // this.http.get("/assets/countries.json").subscribe((data)=>{
+//      ref.countries = data;
+//  });
+      
+      this.langData["english"]={
+"language": "English",
+"postal_code_pattern" : "[0-9]{5}",
+    "select_user" : "Select user"
+};
+      
+      this.langData["czech"]={
+"language": "Czech",
+"postal_code_pattern" : "[0-9]{3}\\s[0-9]{2}",
+"select_user" : "Vyberte uživatele"
+};
       
     
       this.restService.call('/conf/code-tables/UserAddressTypes').pipe(
@@ -38,8 +52,17 @@ export class DataService {
     this.userSource.next(user)
   }
     
-    
     switchLanguage(lang : string){
+        let ref = this;
+      
+      ref.language = this.langData[lang];
+        
+ 
+     localStorage.setItem("address_manager_lang", lang)  
+    }
+    
+    
+    switchLanguageJson(lang : string){ // old version
         let ref = this;
          this.http.get("/assets/"+lang+".json").subscribe((data)=>{
       ref.language = data;
