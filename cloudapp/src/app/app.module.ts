@@ -14,6 +14,8 @@ import { MainComponent } from './main/main.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { FormComponent } from './form/form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
+import { EmailFormComponent } from './email-form/email-form.component';
+import { PhoneFormComponent } from './phone-form/phone-form.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { AddressComponent } from './address/address.component';
 import { DataService } from './data.service';
@@ -26,6 +28,8 @@ import { DataService } from './data.service';
     ContactInfoComponent,
       FormComponent,
     AddressFormComponent,
+      EmailFormComponent,
+      PhoneFormComponent,
       DialogComponent,
       AddressComponent
   ],

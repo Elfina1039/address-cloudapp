@@ -122,15 +122,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
     
 
-    redirectToEdit(i){ // router redirect to the address-form component
+    redirectToEdit(i, form){ // router redirect to the address-form component
         let link = this.userLink;
-        this.router.navigate(["form","edit",btoa(link),i]);
+        this.router.navigate(["form",form,btoa(link),i]);
     }
 
-     redirectToAdd(){ //router redirect to the address-form component
-        let link = this.userLink;
-        this.router.navigate(["form","add",btoa(link)]);
-    }
+  
     
 
   clear() { // clear userData

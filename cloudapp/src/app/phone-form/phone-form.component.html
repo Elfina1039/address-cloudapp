@@ -1,0 +1,35 @@
+<form #form=ngForm>
+    <div class="eca-actions">
+        
+        <button mat-flat-button [routerLink]="['/']" color="secondary">{{data.language.home}}</button>
+        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">{{data.language.back}}</button>
+        <button mat-flat-button color="primary" (click)="update(phone)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="add(phone)" *ngIf="action=='Add'">{{data.language.save}}</button>
+    </div>
+
+    <mat-card>
+        <mat-card-header color="primary">
+            <mat-card-title>{{data.language[action]}} </mat-card-title>
+            <mat-card-subtitle>{{userData.full_name}} ({{userData.primary_id}})</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <mat-form-field>
+                <mat-label>{{data.language.phone}}:</mat-label>
+                <input required pattern="(\+?[0-9]{3})?[0-9]{9}" type="tel" matInput placeholder="phone" name="phone_number" [(ngModel)]="phone.phone_number" #phone_number="ngModel">
+                <mat-error *ngIf="phone_number.errors?.required">
+                    {{data.language.errors.required}}
+                </mat-error>
+                 <mat-error *ngIf="phone_number.errors?.pattern && !phone_number.errors?.required">
+                      {{data.language.errors.phone}}
+                </mat-error>
+            </mat-form-field>
+
+        </mat-card-content>
+
+
+    </mat-card>
+
+</form>
+

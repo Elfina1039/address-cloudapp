@@ -1,52 +1,52 @@
 <form #form=ngForm>
     <div class="eca-actions">
         
-        <button mat-flat-button [routerLink]="['/']" color="secondary">Home</button>
-        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">Back</button>
-        <button mat-flat-button color="primary" (click)="update(address)" *ngIf="action=='Edit'" [disabled]="form.invalid">Update</button>
-        <button mat-flat-button color="primary" (click)="add(address)" *ngIf="action=='Add'">Add</button>
+        <button mat-flat-button [routerLink]="['/']" color="secondary">{{data.language.home}}</button>
+        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">{{data.language.back}}</button>
+        <button mat-flat-button color="primary" (click)="update(address)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="add(address)" *ngIf="action=='Add'">{{data.language.save}}</button>
     </div>
 
     <mat-card>
         <mat-card-header color="primary">
-            <mat-card-title>{{action}} address</mat-card-title>
+            <mat-card-title>{{data.language[action]}}</mat-card-title>
             <mat-card-subtitle>{{userData.full_name}} ({{userData.primary_id}})</mat-card-subtitle>
         </mat-card-header>
 
         <mat-card-content>
 
             <mat-form-field>
-                <mat-label>Street and house number</mat-label>
+                <mat-label>{{data.language.street}}</mat-label>
                 <input required pattern="[^\d]+[0-9]{1,5}" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
                 <mat-error *ngIf="line1.errors?.required">
-                    This field is required.
+                       {{data.language.errors.required}}
                 </mat-error>
                  <mat-error *ngIf="line1.errors?.pattern && !line1.errors?.required">
-                    Please enter street name + number.
+                    {{data.language.errors.street}}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>City</mat-label>
+                <mat-label> {{data.language.city}}</mat-label>
                 <input required matInput placeholder="city" name="line2" [(ngModel)]="address.line2" #line2="ngModel">
                  <mat-error *ngIf="line2.errors?.required">
-                    This field is required.
+                      {{data.language.errors.required}}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Country</mat-label>
+                <mat-label>{{data.language.country}}</mat-label>
                 <input  matInput placeholder="country" name="line4" [(ngModel)]="address.line4">
             </mat-form-field>
 
             <mat-form-field>
-                <mat-label>Postal code</mat-label>
+                <mat-label>{{data.language.postalCode}}</mat-label>
                 <input matInput required [pattern]="data.language.postal_code_pattern" placeholder="postal code" name="postal_code" [(ngModel)]="address.postal_code" (keydown)="formatPostalCode(address.postal_code)" #postal_code="ngModel">
                 <mat-error *ngIf="postal_code.errors?.required">
-                    This field is required.
+                       {{data.language.errors.required}}
                 </mat-error>
                 <mat-error *ngIf="postal_code.errors?.pattern && !postal_code.errors?.required">
-                    Please enter a valid postal code.
+                     {{data.language.errors.postalCode}}
                 </mat-error>
             </mat-form-field>
         
@@ -62,11 +62,11 @@
             <br />
 
             <mat-checkbox [(ngModel)]="address.preferred" name="preferred" labelPosition="before" disabled="true">
-                Preferred
+               {{data.language.preferred}}
             </mat-checkbox>
 
             <mat-form-field>
-                <mat-label>Address Type</mat-label>
+                <mat-label>{{data.language.type}}</mat-label>
                 <mat-select [compareWith]="matchAddressType" name="address_type" [(ngModel)]="address.address_type" multiple>
                   <mat-option *ngFor="let addressType of data.addressTypes" [value]="{value: addressType.code, desc: addressType.description}">{{ addressType.description }}</mat-option>
                 </mat-select>

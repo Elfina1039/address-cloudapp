@@ -74,13 +74,13 @@ export class Address extends Contact{ // address class, can be used to set deful
 export class Email extends Contact{
     email_address : string;
     description : string;
-    email_types : ValDesc[];
+    email_type : ValDesc[];
     
     constructor(data){
         super(data);
         this.email_address = data.email_address ? data.email_address : "";
     this.description = data.description ? data.description : "";
-    this.email_types = data.email_types ? data.email_types:  [{value:"personal", desc:"Osobní"}];
+    this.email_type = data.email_types ? data.email_types:  [{value:"personal", desc:"Osobní"}];
     }
     
     toHtml(){
@@ -90,12 +90,12 @@ export class Email extends Contact{
 
 export class Phone extends Contact{
     phone_number : string;
-    phone_types : ValDesc[];
+    phone_type : ValDesc[];
     
     constructor(data){
         super(data);
          this.phone_number = data.phone_number ? data.phone_number : "";
-         this.phone_types = data.phone_types ? data.phone_types:  [{value:"mobile", desc:"Mobil"}];
+         this.phone_type = data.phone_types ? data.phone_types:  [{value:"mobile", desc:"Mobil"}];
     }
     
        toHtml(){

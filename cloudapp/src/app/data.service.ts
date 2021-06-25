@@ -22,7 +22,7 @@ instCode : any;
 langData : any = {};
     
       configData : any = {"420CKIS_INST" : {allowedAddressTypes:["alternative"],
-                                            allowedEmailTypes:["school"],
+                                            allowedEmailTypes:["school","personal"],
                                             allowedPhoneTypes:["mobile"]
                                            }};
       
@@ -47,7 +47,28 @@ langData : any = {};
 "postal_code_pattern" : "[0-9]{5}",
     "select_user" : "Select user",
     "renewal" : "Renew registration",
-          new_expiry: "Registrations will remain valid until "
+          new_expiry: "Registrations will remain valid until ",
+          home: "Home",
+          back: "Back",
+          save : "Save",
+          Edit: "Edit address",
+          Add:"Add address",
+          errors:{required:"This field is required.",
+                 email: "Email address is invalid.",
+                 phone: "Phone number is invalid.",
+                  street: "This field is invalid.",
+                  postalCode: "Please enter a valid postal code."
+                },
+          phone: "Phone number",
+          street: "Street and house number",
+          city: "City",
+          country: "Country",
+          postalCode: "Postal code",
+          preferred: "Preferred",
+          type: "Type",
+          addresses : "Addresses",
+          emails : "Emails",
+          phones : "Phones"
 };
       
       this.langData["czech"]={
@@ -55,7 +76,29 @@ langData : any = {};
 "postal_code_pattern" : "[0-9]{3}\\s[0-9]{2}",
 "select_user" : "Vyberte uživatele",
            "renewal" : "Obnovit registraci",
-          new_expiry: "Nová registrace bude platná do "
+          new_expiry: "Nová registrace bude platná do ",
+          home: "Domů",
+          back: "Zpět",
+          save: "Uložit",
+          Edit:"Upravit adresu",
+          Add: "Přidat adresu",
+          errors:{required:"Toto pole je povinné.",
+                 email: "Neplatný email.",
+                 phone:"Neplatné číslo.",
+                street: "Pole je neplatné.",
+                  postalCode: "PSČ je neplatné"
+                 },
+        
+          phone: "Telefonní číslo",
+          street : "Ulice a číslo popisné",
+          city: "Město",
+                country: "Stát",
+          postalCode : "PSČ",
+          preferred : "Preferováno",
+          type: "Typ",
+          addresses : "Addresy",
+          emails : "Emailové adresy",
+          phones : "Telefinní čísla"
 };
       
     
