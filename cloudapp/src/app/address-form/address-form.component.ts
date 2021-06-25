@@ -16,6 +16,8 @@ import {MatDialog} from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatSelectChange } from '@angular/material/select'
 
+import { FormComponent } from '../form/form.component';
+
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-form.component.html',
@@ -25,30 +27,24 @@ import { MatSelectChange } from '@angular/material/select'
 
 
 
-export class AddressFormComponent implements OnInit, OnDestroy{
+export class AddressFormComponent extends FormComponent implements OnInit{
 
-    loading = false;
-    action : string = "Edit"; // current form action
-    form: any;
+  
     address: Address;
     addressIndex : number;
    // countries : ValDesc[];
     
-    userData : any;
-    userLink : string;
-    subscription: Subscription;
-    
   constructor(
-    private restService: CloudAppRestService,
-    private eventsService: CloudAppEventsService,
-    private alert: AlertService,
-      private config: CloudAppConfigService,
-    private route: ActivatedRoute, 
-    private router : Router,
-     public data : DataService,
-     public dialog: MatDialog
+     restService: CloudAppRestService,
+     eventsService: CloudAppEventsService,
+    alert: AlertService,
+      config: CloudAppConfigService,
+     route: ActivatedRoute, 
+     router : Router,
+    data : DataService,
+     dialog: MatDialog
   ) {
-  
+  super(restService, eventsService, alert, config, route, router, data, dialog);
     }
 
   ngOnInit() {
@@ -61,10 +57,9 @@ export class AddressFormComponent implements OnInit, OnDestroy{
         this.route.paramMap.subscribe(function(p){ //extract URL parametres
          let user : string = atob(p.get('user'));
          let address : string = p.get('address');
-            
-            ref.userLink = user;
+          
       
-            if(address=="undefined" || address==null){ // if there is no reference to address, initialize an empty instance of Address
+            if(address=="-1"){ // if there is no reference to address, initialize an empty instance of Address
                 ref.address = new Address({line1:""});
                 ref.action="Add"; // change form action
              
@@ -78,10 +73,7 @@ export class AddressFormComponent implements OnInit, OnDestroy{
     
  
 
-  ngOnDestroy() {
-       this.subscription.unsubscribe();
-  }
-    
+
     formatPostalCode(code){
         console.log(code);
         if(code.length==3){
@@ -97,24 +89,16 @@ export class AddressFormComponent implements OnInit, OnDestroy{
     }
     
     matchAddressType(item1, item2){
-
-      
      return item1 && item2 ? item1.value===item2.value : false;
     }
     
 
-confirm(){ // open dialog asking for confirmation
-    let address = this.address;
-    let userId = this.userData.primary_id;
-    let dialogRef = this.dialog.open(DialogComponent, {data:{address:address, userId:userId}});
-     this.config.get().subscribe((result)=>console.log(result));
-    return dialogRef;
-}
 
     
 
-update(){ // modify the address in userData and call save()
-    this.confirm().afterClosed().subscribe((result)=>{
+update(address){ // modify the address in userData and call save()
+    
+    this.confirm(address).afterClosed().subscribe((result)=>{
         if(result=="true"){
             this.userData.contact_info.address[this.addressIndex] = this.address;
     this.save();
@@ -124,8 +108,8 @@ update(){ // modify the address in userData and call save()
    
 }    
     
-add(){ // add the new address to userData and call save
-        this.confirm().afterClosed().subscribe((result)=>{
+add(address){ // add the new address to userData and call save
+        this.confirm(address).afterClosed().subscribe((result)=>{
         if(result=="true"){
             this.userData.contact_info.address.push(this.address);
     this.save();
@@ -133,41 +117,6 @@ add(){ // add the new address to userData and call save
     });
 } 
     
-  save() { // sent the PUT request to Alma API
-    const requestBody = this.userData;
-      console.log(JSON.stringify(requestBody));
-    this.loading = true;
-    let request: Request = {
-      url: this.userLink, 
-   // queryParams:{override:"contact_info.address.preferred"},
-      method: HttpMethod.PUT,
-      requestBody
-    };
-
-    this.restService.call(request)
-    .pipe(finalize(()=>this.loading=false))
-    .subscribe({
-      next: result => {
-         this.eventsService.refreshPage().subscribe(
-          ()=>this.alert.success('Record ' + result.primary_id + "updated.")
-        );
-      },
-      error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to update data: ' + e.message);
-        console.error(e);
-      }
-    });    
-  }
-
-    
-      private tryParseJson(value: any) {
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      console.error(e);
-    }
-    return undefined;
-  }
 
 
 

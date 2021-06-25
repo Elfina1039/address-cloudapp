@@ -10,12 +10,30 @@ export class DataService {
 
   private userSource = new BehaviorSubject({});
   currentUser = this.userSource.asObservable();
+    
+     private instSource = new BehaviorSubject({});
+  currentInst = this.instSource.asObservable();
 
  countries : any;
  addressTypes = [];
  language : any;
+instCode : any;
     
 langData : any = {};
+    
+      configData : any = {"420CKIS_INST" : {allowedAddressTypes:["alternative"],
+                                            allowedEmailTypes:["school"],
+                                            allowedPhoneTypes:["mobile"]
+                                           }};
+      
+      defaultConfig : any = {
+          allowedAddressTypes: ["home","alternative", "office", "work"],
+           allowedEmailTypes:["school"],
+        allowedPhoneTypes:["mobile"]
+      }
+      
+      config : any;
+      
 
   constructor(private http: HttpClient, private restService: CloudAppRestService) {
       let ref = this;
@@ -27,24 +45,29 @@ langData : any = {};
       this.langData["english"]={
 "language": "English",
 "postal_code_pattern" : "[0-9]{5}",
-    "select_user" : "Select user"
+    "select_user" : "Select user",
+    "renewal" : "Renew registration",
+          new_expiry: "Registrations will remain valid until "
 };
       
       this.langData["czech"]={
 "language": "Czech",
 "postal_code_pattern" : "[0-9]{3}\\s[0-9]{2}",
-"select_user" : "Vyberte uživatele"
+"select_user" : "Vyberte uživatele",
+           "renewal" : "Obnovit registraci",
+          new_expiry: "Nová registrace bude platná do "
 };
       
+    
     
       this.restService.call('/conf/code-tables/UserAddressTypes').pipe(
         map(result => result.row ),
       )
       .subscribe(result => ref.addressTypes = result );
       
-      let language = localStorage.getItem("address_manager_lang") ? localStorage.getItem("address_manager_lang") : "english";
+     
       
-      this.switchLanguage(language);
+      
   }
     
     // load the currently displayed user data
@@ -52,13 +75,30 @@ langData : any = {};
     this.userSource.next(user)
   }
     
+    
+     switchInstCode(initData: any) {
+    this.instSource.next(initData.instCode);
+         if(this.configData[initData.instCode]){
+             this.config = this.configData[initData.instCode];
+         }else{
+             this.config = this.defaultConfig;
+         }
+         console.log(initData);
+         
+         
+         if(initData.lang=="cs"){
+             this.switchLanguage("czech");
+         }else{
+              this.switchLanguage("english");
+         }
+  }
+    
+    
     switchLanguage(lang : string){
         let ref = this;
       
       ref.language = this.langData[lang];
         
- 
-     localStorage.setItem("address_manager_lang", lang)  
     }
     
     

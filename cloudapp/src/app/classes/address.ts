@@ -3,7 +3,17 @@ export interface ValDesc{ //the interface for address.country and address.type[]
     desc?: string;
 }
 
-export class Address{ // address class, can be used to set defult values
+export class Contact{
+     preferred: boolean;
+    segment_type: string;
+    
+    constructor(data){
+         this.preferred =  true;
+        this.segment_type = data.segment_type ? data.segment_type : "External";
+    }
+}
+
+export class Address extends Contact{ // address class, can be used to set defult values
     line1 : string;
     line2 : string;
     line3 : string;
@@ -18,12 +28,12 @@ export class Address{ // address class, can be used to set defult values
     address_note: string;
     start_date : string;
     end_date : string;
-    preferred: boolean;
-    segment_type: string;
+   
     
     address_type: ValDesc[];
  
     constructor(data){
+        super(data);
       
       this.line1 = data.line1 ? data.line1 : "";
          this.line2 = data.line2 ? data.line2 : "";
@@ -39,20 +49,57 @@ export class Address{ // address class, can be used to set defult values
         this.address_note = data.address_note ? data.address_note : "";
         this.start_date = data.start_date ? data.start_date : this.getDate();
         this.end_date = data.end_date ? data.end_date : "2099-12-31Z";
-        this.preferred =  true;
-        this.segment_type = data.segment_type ? data.segment_type : "External";
+       
         
         this.address_type = data.address_type ? data.address_type : [{value:"alternative", desc:"Alternative"}];
         
     }
     
-    getDate(){
-        let date = new Date();
+    getDate(date: Date = new Date()){
+        //let date = new Date();
         let m = date.getMonth().toString().length==2 ? date.getMonth() : "0"+date.getMonth();
         let d = date.getDate().toString().length==2 ? date.getDate() : "0"+date.getDate();
         let str : string = date.getFullYear()+"-"+m+"-"+d+"Z";
 
         return str;
+    }
+    
+    toHtml(){
+        let result = this.line1 + "<br/>" + this.line2 + "</br>" + this.line4 + "<br/>" + this.postal_code;
+        return result;
+    }
+    
+}
+
+export class Email extends Contact{
+    email_address : string;
+    description : string;
+    email_types : ValDesc[];
+    
+    constructor(data){
+        super(data);
+        this.email_address = data.email_address ? data.email_address : "";
+    this.description = data.description ? data.description : "";
+    this.email_types = data.email_types ? data.email_types:  [{value:"personal", desc:"Osobní"}];
+    }
+    
+    toHtml(){
+        return this.email_address;
+    }
+}
+
+export class Phone extends Contact{
+    phone_number : string;
+    phone_types : ValDesc[];
+    
+    constructor(data){
+        super(data);
+         this.phone_number = data.phone_number ? data.phone_number : "";
+         this.phone_types = data.phone_types ? data.phone_types:  [{value:"mobile", desc:"Mobil"}];
+    }
+    
+       toHtml(){
+        return this.phone_number;
     }
     
 }

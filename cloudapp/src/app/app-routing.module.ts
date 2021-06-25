@@ -3,13 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MainComponent } from './main/main.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { FormComponent } from './form/form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent },
   { path: 'contactinfo/:user', component: ContactInfoComponent },
-    { path: 'form/edit/:user/:address', component: AddressFormComponent},
-    { path: 'form/add/:user', component: AddressFormComponent}
+    { path: 'renew/:user', component: FormComponent },
+    { path: 'form/edit/:user/:address', component: AddressFormComponent}
+   // { path: 'form/add/:user/:address', component: AddressFormComponent}
 
 ];
 

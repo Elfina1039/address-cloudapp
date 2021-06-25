@@ -4,27 +4,27 @@
 
 <h1>{{userData.full_name}} ({{userData.primary_id}})</h1>
 <h2>Addresses</h2>
-<ng-container *ngIf="userData?.contact_info?.address">
+<ng-container *ngIf="addresses.length>0">
 
-    <mat-expansion-panel *ngFor="let a of userData.contact_info.address; let i = index" hideToggle="true">
+    <mat-expansion-panel *ngFor="let a of addresses" hideToggle="true">
         <mat-expansion-panel-header >
             <mat-panel-title>
-                <span class="uxf-icon uxf-check" *ngIf="a.preferred"></span>   {{a.line1}}
+                 {{a.address.line1}}
             </mat-panel-title>
             <mat-panel-description>
              -
-                    <span *ngFor="let type of a.address_type" color="primary">
+                    <span *ngFor="let type of a.address.address_type" color="primary">
                         {{type.desc}}-
                     </span>
             
 
             </mat-panel-description>
 
-            <button mat-icon-button aria-label="edit" (click)="redirectToEdit(i)" [disabled]="allowEdit(a)">
+            <button mat-icon-button aria-label="edit" (click)="redirectToEdit(a.index)" >
                 <mat-icon>edit</mat-icon>
             </button>
         </mat-expansion-panel-header>
-        <app-address [address]="a"></app-address>
+        <app-address [address]="a.address"></app-address>
 
 {{a.segment_type}}
     </mat-expansion-panel>
@@ -32,10 +32,67 @@
 
 </ng-container>
 
+<h2>Emails</h2>
 
-<button mat-icon-button aria-label="add" color="primary" (click)="redirectToAdd()">
-    <span class="uxf-icon uxf-plus-circle"></span>
-</button>
+<ng-container *ngIf="emails.length>0">
+
+    <mat-expansion-panel *ngFor="let e of emails" hideToggle="true">
+        <mat-expansion-panel-header >
+            <mat-panel-title>
+                 {{e.address.email_address}}
+            </mat-panel-title>
+            <mat-panel-description>
+             -
+                    <span *ngFor="let type of e.address.email_type" color="primary">
+                        {{type.desc}}-
+                    </span>
+            
+
+            </mat-panel-description>
+
+            <button mat-icon-button aria-label="edit" (click)="redirectToEdit(a.index)" >
+                <mat-icon>edit</mat-icon>
+            </button>
+        </mat-expansion-panel-header>
+        <app-address [address]="e.address"></app-address>
+
+    </mat-expansion-panel>
+
+
+</ng-container>
+
+
+<h2>Phones</h2>
+
+<ng-container *ngIf="phones.length>0">
+
+    <mat-expansion-panel *ngFor="let p of phones" hideToggle="true">
+        <mat-expansion-panel-header >
+            <mat-panel-title>
+                 {{p.address.phone_number}}
+            </mat-panel-title>
+            <mat-panel-description>
+             -
+                    <span *ngFor="let type of p.address.phone_type" color="primary">
+                        {{type.desc}}-
+                    </span>
+            
+
+            </mat-panel-description>
+
+            <button mat-icon-button aria-label="edit" (click)="redirectToEdit(a.index)" >
+                <mat-icon>edit</mat-icon>
+            </button>
+        </mat-expansion-panel-header>
+        <app-address [address]="p.address"></app-address>
+
+    </mat-expansion-panel>
+
+
+</ng-container>
 
 
 
+
+
+<footer>{{instCode}}</footer>

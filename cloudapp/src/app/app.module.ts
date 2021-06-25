@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
 import { ContactInfoComponent } from './contact-info/contact-info.component';
+import { FormComponent } from './form/form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { AddressComponent } from './address/address.component';
@@ -23,6 +24,7 @@ import { DataService } from './data.service';
     AppComponent,
     MainComponent,
     ContactInfoComponent,
+      FormComponent,
     AddressFormComponent,
       DialogComponent,
       AddressComponent

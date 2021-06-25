@@ -8,6 +8,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from "../data.service";
 import { Subscription } from 'rxjs';
 
+import { Address, ValDesc, Email, Phone } from '../classes/address';
+
 @Component({
   selector: 'app-contact-info',
   templateUrl: './contact-info.component.html',
@@ -18,8 +20,15 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   loading = false;
   userData: any; 
   userLink : string;
+    
   addresses : any = [];
+ emails : any = [];
+     phones : any = [];
+    
   subscription: Subscription;
+    
+    instSubscription : Subscription;
+    instCode : any;
 
   constructor(
     private restService: CloudAppRestService,
@@ -32,6 +41,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() { // read user link from URL and call loadUserData
       let ref = this;
+      
       this.route.paramMap.subscribe(function(p){
         let user : string=p.get('user');       
         ref.userLink = user; 
@@ -40,6 +50,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
       //subscribe to he observable from the data.service which allows to share userData between components
      this.subscription = this.data.currentUser.subscribe(user => this.userData = user);
+     this.instSubscription = this.data.currentInst.subscribe(inst => this.instCode = inst);
   }
 
   ngOnDestroy(){
@@ -51,24 +62,66 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     this.restService.call<any>(link)
     .pipe(finalize(()=>this.loading=false))
     .subscribe(
-      result => this.extractAddresses(result),
+      result => this.loadData(result),
       error => this.alert.error('Failed to retrieve entity: ' + error.message)
     );
   }
     
-    extractAddresses(userData){
-        console.log(userData);
-        let addresses = this.addresses;
-        this.userData = userData;
-        this.data.switchUser(userData);
+    
+    loadData(data){
+          this.userData = data;
+        this.data.switchUser(data);
+        if(data.expiry_date && new Date(data.expiry_date)<=new Date()){
+           this.router.navigate(["renew",btoa(this.userLink)]);
+           }else{
+           this.extractAddresses(data);
+           }
         
-        userData.contact_info.address.forEach((a)=>{
-            a.preferred = false;
-            console.log(a);
-            addresses.push(a);
-        });
     }
     
+    extractAddresses(userData){
+        console.log(userData);
+        let ref = this;
+        
+        userData.contact_info.address.forEach((a, ai)=>{
+            a.preferred = false;
+           if(ref.isEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
+               ref.addresses.push({index: ai, address: new Address(a)});
+           }
+            
+        });
+        
+         userData.contact_info.email.forEach((a, ai)=>{
+            a.preferred = false;
+           if(ref.isEditable(a.email_type, ref.data.config.allowedEmailTypes, "")){
+               ref.emails.push({index: ai, address: new Email(a)});
+           }
+            
+        });
+        
+          userData.contact_info.phone.forEach((a, ai)=>{
+            a.preferred = false;
+           if(ref.isEditable(a.phone_type, ref.data.config.allowedPhoneTypes, "")){
+               ref.phones.push({index: ai, address: new Phone(a)});
+           }
+            
+        });
+        
+        if(this.addresses.length==0){
+            this.addresses.push({index:-1, address: new Address({line1:""})});
+        }
+        
+          if(this.emails.length==0){
+            this.emails.push({index:-1, address: new Email({data:""})});
+        }
+          if(this.phones.length==0){
+            this.phones.push({index:-1, address: new Phone({data:""})});
+        }
+        
+    }
+    
+    
+
     redirectToEdit(i){ // router redirect to the address-form component
         let link = this.userLink;
         this.router.navigate(["form","edit",btoa(link),i]);
@@ -85,32 +138,18 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   }
 
 
-    allowEdit(address):boolean{ // the function determining whether to allow address editing
-        let disable = true;
-        address.address_type.forEach((t)=>{
-           if(t.value=="alternative" || (t.value=="home" && address.address_note=="User Address Type: Adresa pro korespondenci")){
-             disable = false;  
+    isEditable(types, allowed, note:string = ""):boolean{ // the function determining whether to allow address editing
+        let allow = false;
+        types.forEach((t)=>{
+           if(allowed.indexOf(t.value)!=-1 || (t.value=="home" && note =="User Address Type: Adresa pro korespondenci")){
+             allow = true;  
            } 
         });
         
-        return disable;
+        return allow;
     }
     
-      allowAdding():boolean{ // the function determining whether to allow address addition
-          let ref = this;
-        let disable : boolean = true;
-        let result : boolean = false;
-        if (this.userData && this.userData.contact_info && this.userData.contact_info.address) {
-          this.userData.contact_info.address.forEach((a)=>{
-            disable = ref.allowEdit(a);
-             if(disable==false){
-                 result = true;
-             }
-         });
-         return result;
-        }
 
-    }
 
 
 }

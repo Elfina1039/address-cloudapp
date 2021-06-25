@@ -2,4 +2,3 @@
 "language": "English",
 "postal_code_pattern" : "[0-9]{5}",
     "select_user" : "Select user"
-}

@@ -1,10 +1,6 @@
-<p>
-    {{address.line1}} <br/>
-     {{address.line2}} <br/>
-     {{address.postal_code}} <br/>
-     {{address.line4}} <br/>
-    {{address.address_note}}<br/>
-    {{address.preferred}}
-    
+
+ <span class="uxf-icon uxf-check" *ngIf="address.preferred"></span> 
+<p [innerHTML]="address.toHtml()">
+
     
 </p>

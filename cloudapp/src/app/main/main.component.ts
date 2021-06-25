@@ -18,6 +18,7 @@ export class MainComponent implements OnInit, OnDestroy {
   loading = false;
   selectedEntity: Entity;
   apiResult: any;
+    authToken : any; // create interface
 
   entities$: Observable<Entity[]> = this.eventsService.entities$;
     noentities : Entity[]=[];
@@ -37,8 +38,14 @@ export class MainComponent implements OnInit, OnDestroy {
               this.router.navigate(["contactinfo",users[0].link]);
           }
       });
-
+      
+          this.eventsService.getInitData()
+      .subscribe(initData =>{ console.log(initData);
+                              this.data.switchInstCode(initData)});
   }
+
+
+  
 
   ngOnDestroy(): void {
   }

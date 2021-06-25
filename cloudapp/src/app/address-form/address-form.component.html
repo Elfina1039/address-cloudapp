@@ -3,8 +3,8 @@
         
         <button mat-flat-button [routerLink]="['/']" color="secondary">Home</button>
         <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">Back</button>
-        <button mat-flat-button color="primary" (click)="update()" *ngIf="action=='Edit'" [disabled]="form.invalid">Update</button>
-        <button mat-flat-button color="primary" (click)="add()" *ngIf="action=='Add'">Add</button>
+        <button mat-flat-button color="primary" (click)="update(address)" *ngIf="action=='Edit'" [disabled]="form.invalid">Update</button>
+        <button mat-flat-button color="primary" (click)="add(address)" *ngIf="action=='Add'">Add</button>
     </div>
 
     <mat-card>
