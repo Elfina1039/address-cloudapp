@@ -36,7 +36,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     private alert: AlertService,
     private route: ActivatedRoute, 
     private router : Router,
-    private data : DataService
+    public data : DataService
   ) { }
 
   ngOnInit() { // read user link from URL and call loadUserData
@@ -84,7 +84,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         let ref = this;
         
         userData.contact_info.address.forEach((a, ai)=>{
-            a.preferred = false;
+    
            if(ref.isEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
                ref.addresses.push({index: ai, address: new Address(a)});
            }
@@ -92,7 +92,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         });
         
          userData.contact_info.email.forEach((a, ai)=>{
-            a.preferred = false;
+         
            if(ref.isEditable(a.email_type, ref.data.config.allowedEmailTypes, "")){
                ref.emails.push({index: ai, address: new Email(a)});
            }
@@ -100,7 +100,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         });
         
           userData.contact_info.phone.forEach((a, ai)=>{
-            a.preferred = false;
+      
            if(ref.isEditable(a.phone_type, ref.data.config.allowedPhoneTypes, "")){
                ref.phones.push({index: ai, address: new Phone(a)});
            }

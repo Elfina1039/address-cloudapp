@@ -79,28 +79,7 @@ export class PhoneFormComponent extends FormComponent implements OnInit{
     
 
 
-    
-
-update(phone){ // modify the phone in userData and call save()
-    
-    this.confirm(phone).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.phone[this.phoneIndex] = this.phone;
-    this.save();
-        }
-         
-    });
-   
-}    
-    
-add(phone){ // add the new phone to userData and call save
-        this.confirm(phone).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.phone.push(this.phone);
-    this.save();
-        }
-    });
-} 
+ 
     
 
 

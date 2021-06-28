@@ -75,29 +75,7 @@ export class EmailFormComponent extends FormComponent implements OnInit{
  
 
 
-    
-
-update(email){ // modify the address in userData and call save()
-    
-    this.confirm(email).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.email[this.emailIndex] = this.email;
-    this.save();
-        }
-         
-    });
-   
-}    
-    
-add(email){ // add the new address to userData and call save
-        this.confirm(email).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.email.push(this.email);
-    this.save();
-        }
-    });
-} 
-    
+ 
 
 
 

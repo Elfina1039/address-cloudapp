@@ -3,8 +3,8 @@
         
         <button mat-flat-button [routerLink]="['/']" color="secondary">{{data.language.home}}</button>
         <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">{{data.language.back}}</button>
-        <button mat-flat-button color="primary" (click)="update(email)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
-        <button mat-flat-button color="primary" (click)="add(email)" *ngIf="action=='Add'">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="update(email,'email',emailIndex)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="add(email,'email')" *ngIf="action=='Add'" [disabled]="form.invalid">{{data.language.save}}</button>
     </div>
 
     <mat-card>
@@ -26,7 +26,9 @@
                 </mat-error>
             </mat-form-field>
 
-          
+               <mat-checkbox [(ngModel)]="email.preferred" name="preferred" labelPosition="before" [disabled]="data.config.fields.preferred">
+               {{data.language.preferred}}
+            </mat-checkbox>
 
         </mat-card-content>
 

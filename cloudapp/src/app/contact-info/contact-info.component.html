@@ -95,4 +95,9 @@
 
 
 
-<footer>{{instCode}}</footer>
+<footer>
+   
+    <button *ngIf="data.language.language!='Czech'" mat-flat-button (click)="data.switchLanguage('czech')">Czech</button>
+    
+    <button *ngIf="data.language.language!='English'" mat-flat-button (click)="data.switchLanguage('english')">English</button>
+</footer>

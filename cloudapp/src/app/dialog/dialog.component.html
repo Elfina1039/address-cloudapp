@@ -1,18 +1,21 @@
-<h1 mat-dialog>Confirm</h1>
+<h1 mat-dialog>{{data.dialog.confirm}}</h1>
+
+
 <mat-dialog-content>
     <app-address [address]="data.address"></app-address>
 
+    <p>{{data.dialog.verify}}</p>
     <mat-form-field>
-        <mat-label>Verify with user ID:</mat-label>
-        <input matInput placeholder="country" name="line4" [(ngModel)]="userId" #verification="ngModel">
+        <mat-label>{{data.dialog.primaryId}}</mat-label>
+        <input autocomplete="off" matInput placeholder="country" name="line4" [(ngModel)]="userId" #verification="ngModel">
     </mat-form-field>
 
-    <mat-error *ngIf="userId!=data.userId && verification.touched">User Ids do not match.</mat-error>
+    <mat-error *ngIf="userId!=data.userId && verification.touched">{{data.dialog.idsNotMatch}}</mat-error>
 
 
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button *ngIf="userId==data.userId" mat-flat-button mat-dialog-close mat-dialog-close="true" color="primary">Confirm</button>
+    <button *ngIf="userId==data.userId" mat-flat-button mat-dialog-close mat-dialog-close="true" color="primary">{{data.dialog.confirm}}</button>
 
-    <button mat-flat-button mat-dialog-close mat-dialog-close="false" color="secondary">Cancel</button>
+    <button mat-flat-button mat-dialog-close mat-dialog-close="false" color="secondary">{{data.dialog.cancel}}</button>
 </mat-dialog-actions>

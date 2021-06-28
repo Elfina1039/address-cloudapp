@@ -94,29 +94,6 @@ export class AddressFormComponent extends FormComponent implements OnInit{
     
 
 
-    
-
-update(address){ // modify the address in userData and call save()
-    
-    this.confirm(address).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.address[this.addressIndex] = this.address;
-    this.save();
-        }
-         
-    });
-   
-}    
-    
-add(address){ // add the new address to userData and call save
-        this.confirm(address).afterClosed().subscribe((result)=>{
-        if(result=="true"){
-            this.userData.contact_info.address.push(this.address);
-    this.save();
-        }
-    });
-} 
-    
 
 
 

@@ -83,17 +83,23 @@ export class FormComponent implements OnDestroy{
 
 confirm(data){ // open dialog asking for confirmation
     let address = data;
+    let dialog = this.data.language.dialog;
+ 
     let userId = this.userData.primary_id;
-    let dialogRef = this.dialog.open(DialogComponent, {data:{address:data, userId:userId}});
+    let dialogRef = this.dialog.open(DialogComponent, {data:{address:data, userId:userId, dialog:dialog}});
      this.config.get().subscribe((result)=>console.log(result));
     return dialogRef;
 }
     
     calcRenewal(){
-         let today = new Date;
+        let today = new Date();
+    
         let renewIn = 1;
+        let year = 365*24*60*60*1000;
         
-        this.newExpiry = new Date("2022-01-01");
+        
+        let newExpiry= today.getTime()+(1*year);
+        this.newExpiry = new Date(newExpiry);
     }
 
     renewAccount(){
@@ -102,6 +108,44 @@ confirm(data){ // open dialog asking for confirmation
         
         this.save();
     }
+    
+    dispreferr(contacts){
+        contacts.forEach((c)=>{
+            c.preferred = false;
+        });
+    }
+    
+    
+update(data, field, index){ // modify the address in userData and call save()
+    
+    this.confirm(data).afterClosed().subscribe((result)=>{
+        if(result=="true"){
+            if(data.preferred==true){
+                this.dispreferr(this.userData.contact_info[field]);
+            }
+            
+            this.userData.contact_info[field][index] = data;
+    this.save();
+        }
+         
+    });
+   
+}    
+    
+add(data, field){ // add the new address to userData and call save
+     
+        this.confirm(data).afterClosed().subscribe((result)=>{
+        if(result=="true"){
+            if(data.preferred==true){
+                this.dispreferr(this.userData.contact_info[field]);
+            }
+            this.userData.contact_info[field].push(data);
+    this.save();
+        }
+    });
+} 
+    
+    
 
     
   save() { // sent the PUT request to Alma API

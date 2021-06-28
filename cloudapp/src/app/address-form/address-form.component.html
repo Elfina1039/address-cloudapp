@@ -3,8 +3,8 @@
         
         <button mat-flat-button [routerLink]="['/']" color="secondary">{{data.language.home}}</button>
         <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">{{data.language.back}}</button>
-        <button mat-flat-button color="primary" (click)="update(address)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
-        <button mat-flat-button color="primary" (click)="add(address)" *ngIf="action=='Add'">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="update(address,'address',addressIndex)" *ngIf="action=='Edit'" [disabled]="form.invalid">{{data.language.save}}</button>
+        <button mat-flat-button color="primary" (click)="add(address,'address')" *ngIf="action=='Add'" [disabled]="form.invalid">{{data.language.save}}</button>
     </div>
 
     <mat-card>
@@ -36,7 +36,7 @@
 
             <mat-form-field>
                 <mat-label>{{data.language.country}}</mat-label>
-                <input  matInput placeholder="country" name="line4" [(ngModel)]="address.line4">
+                <input  matInput placeholder="country" name="line4" [(ngModel)]="address.line4" [disabled]="data.config.fields.line4">
             </mat-form-field>
 
             <mat-form-field>
@@ -61,13 +61,17 @@
             </mat-form-field>-->
             <br />
 
-            <mat-checkbox [(ngModel)]="address.preferred" name="preferred" labelPosition="before" disabled="true">
+            <mat-checkbox [(ngModel)]="address.preferred" name="preferred" labelPosition="before" [disabled]="data.config.fields.preferred">
                {{data.language.preferred}}
             </mat-checkbox>
 
             <mat-form-field>
                 <mat-label>{{data.language.type}}</mat-label>
-                <mat-select [compareWith]="matchAddressType" name="address_type" [(ngModel)]="address.address_type" multiple>
+                <mat-select [compareWith]="matchAddressType" 
+                            name="address_type" 
+                            [(ngModel)]="address.address_type"
+                            [disabled]="data.config.fields.type"
+                            multiple>
                   <mat-option *ngFor="let addressType of data.addressTypes" [value]="{value: addressType.code, desc: addressType.description}">{{ addressType.description }}</mat-option>
                 </mat-select>
             </mat-form-field>  

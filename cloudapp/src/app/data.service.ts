@@ -23,13 +23,19 @@ langData : any = {};
     
       configData : any = {"420CKIS_INST" : {allowedAddressTypes:["alternative"],
                                             allowedEmailTypes:["school","personal"],
-                                            allowedPhoneTypes:["mobile"]
+                                            allowedPhoneTypes:["mobile"],
+                                            fields : {line4:true,
+                                                            preferred: true,
+                                                            type : true}
                                            }};
       
       defaultConfig : any = {
           allowedAddressTypes: ["home","alternative", "office", "work"],
            allowedEmailTypes:["school"],
-        allowedPhoneTypes:["mobile"]
+        allowedPhoneTypes:["mobile"],
+fields : {line4:false,
+            preferred: false,
+            type : false}
       }
       
       config : any;
@@ -51,8 +57,8 @@ langData : any = {};
           home: "Home",
           back: "Back",
           save : "Save",
-          Edit: "Edit address",
-          Add:"Add address",
+          Edit: "Edit contact info",
+          Add:"Add contact info",
           errors:{required:"This field is required.",
                  email: "Email address is invalid.",
                  phone: "Phone number is invalid.",
@@ -68,7 +74,12 @@ langData : any = {};
           type: "Type",
           addresses : "Addresses",
           emails : "Emails",
-          phones : "Phones"
+          phones : "Phones",
+        dialog:{ verify : "Verify with user primary id.",
+          primaryId : "Primary identifier",
+          confirm : "Confirm",
+          cancel : "Cancel",
+          idsNotMatch : "User IDs do not match."}
 };
       
       this.langData["czech"]={
@@ -80,8 +91,8 @@ langData : any = {};
           home: "Domů",
           back: "Zpět",
           save: "Uložit",
-          Edit:"Upravit adresu",
-          Add: "Přidat adresu",
+          Edit:"Upravit údaje",
+          Add: "Přidat kontaktní údaje",
           errors:{required:"Toto pole je povinné.",
                  email: "Neplatný email.",
                  phone:"Neplatné číslo.",
@@ -98,7 +109,12 @@ langData : any = {};
           type: "Typ",
           addresses : "Addresy",
           emails : "Emailové adresy",
-          phones : "Telefinní čísla"
+          phones : "Telefinní čísla",
+        dialog:{verify : "Pro potvrzení zadejte identifikátor uživatele.",
+          primaryId : "Primární identifikátor",
+            confirm : "Potvrdit",
+          cancel : "Zrušit",
+          idsNotMatch : "Identifikátory se neshodují."}
 };
       
     
