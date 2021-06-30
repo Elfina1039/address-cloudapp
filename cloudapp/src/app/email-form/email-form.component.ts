@@ -67,7 +67,7 @@ export class EmailFormComponent extends FormComponent implements OnInit{
             }else{
                ref.emailIndex = parseInt(address); // save address index
                ref.email = new Email(ref.userData.contact_info.email[address]); // initialize new instance of address based on the address to be edited
-                console.log(ref.email);
+              
             }
       });  
   }

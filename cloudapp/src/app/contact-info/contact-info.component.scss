@@ -5,6 +5,12 @@
     width:100%;
 }
 
+mat-panel-title, mat-panel-description{
+        display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
 .entities-radio-group {
   display: flex;
   flex-direction: column;

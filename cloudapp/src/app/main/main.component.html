@@ -1,4 +1,4 @@
-  <h1>{{data.language.select_user}}</h1>
+  <h1>{{data?.language?.select_user}}</h1>
 
 <ng-container 
   *ngIf="(entities$ | async)?.length > 0; then entities; else noentities"
@@ -24,7 +24,7 @@
 
 <footer>
    
-    <button *ngIf="data.language.language!='Czech'" mat-flat-button (click)="data.switchLanguage('czech')">Czech</button>
+    <button *ngIf="data?.language?.language!='Czech'" mat-flat-button (click)="data.switchLanguage('czech')">Czech</button>
     
-    <button *ngIf="data.language.language!='English'" mat-flat-button (click)="data.switchLanguage('english')">English</button>
+    <button *ngIf="data?.language?.language!='English'" mat-flat-button (click)="data.switchLanguage('english')">English</button>
 </footer>

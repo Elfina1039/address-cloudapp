@@ -1,21 +1,21 @@
 <form #form=ngForm>
     <div class="eca-actions">
         
-        <button mat-flat-button [routerLink]="['/']" color="secondary">Home</button>
-        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">Back</button>
-        <button mat-flat-button color="primary" (click)="renewAccount()"  [disabled]="form.invalid">Obnovit</button>
+        <button mat-flat-button [routerLink]="['/']" color="secondary">{{data.language.home}}</button>
+        <button mat-flat-button [routerLink]="['/contactinfo',userLink]" color="secondary">{{data.language.back}}</button>
+     <!--   <button mat-flat-button color="primary" (click)="renewAccount()"  [disabled]="form.invalid">Obnovit</button>-->
        
     </div>
 
     <mat-card>
         <mat-card-header>
             <mat-card-title>
-             {{data.language.renewal}}
+             {{data?.language?.renewal}}
             </mat-card-title>
            
         </mat-card-header>
 
-{{data.language.new_expiry}} : {{newExpiry?.toString()}}
+{{data?.language?.new_expiry}}
     </mat-card>
 
 </form>

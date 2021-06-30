@@ -20,10 +20,9 @@ export class DataService {
 instCode : any;
     
 langData : any = {};
-    
       configData : any = {"420CKIS_INST" : {allowedAddressTypes:["alternative"],
-                                            allowedEmailTypes:["school","personal"],
-                                            allowedPhoneTypes:["mobile"],
+                                            allowedEmailTypes:["true"],
+                                            allowedPhoneTypes:["true"],
                                             fields : {line4:true,
                                                             preferred: true,
                                                             type : true}
@@ -31,8 +30,8 @@ langData : any = {};
       
       defaultConfig : any = {
           allowedAddressTypes: ["home","alternative", "office", "work"],
-           allowedEmailTypes:["school"],
-        allowedPhoneTypes:["mobile"],
+           allowedEmailTypes:[true, false],
+        allowedPhoneTypes:[true, false],
 fields : {line4:false,
             preferred: false,
             type : false}
@@ -52,8 +51,8 @@ fields : {line4:false,
 "language": "English",
 "postal_code_pattern" : "[0-9]{5}",
     "select_user" : "Select user",
-    "renewal" : "Renew registration",
-          new_expiry: "Registrations will remain valid until ",
+    "renewal" : "Registration has expired",
+          new_expiry: "Please renew the registration in Alma before proceeding. ",
           home: "Home",
           back: "Back",
           save : "Save",
@@ -86,8 +85,8 @@ fields : {line4:false,
 "language": "Czech",
 "postal_code_pattern" : "[0-9]{3}\\s[0-9]{2}",
 "select_user" : "Vyberte uživatele",
-           "renewal" : "Obnovit registraci",
-          new_expiry: "Nová registrace bude platná do ",
+           "renewal" : "Registrace vypršela",
+          new_expiry: "Obnovte, prosím, registraci v prosředí Almy.",
           home: "Domů",
           back: "Zpět",
           save: "Uložit",
@@ -142,7 +141,7 @@ fields : {line4:false,
          }else{
              this.config = this.defaultConfig;
          }
-         console.log(initData);
+      
          
          
          if(initData.lang=="cs"){

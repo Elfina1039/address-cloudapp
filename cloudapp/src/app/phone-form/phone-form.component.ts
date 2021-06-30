@@ -66,7 +66,7 @@ export class PhoneFormComponent extends FormComponent implements OnInit{
             }else{
                ref.phoneIndex = parseInt(address); // save address index
                ref.phone = new Phone(ref.userData.contact_info.phone[address]); // initialize new instance of address based on the address to be edited
-                console.log(ref.phone);
+           
             }
       });  
   }

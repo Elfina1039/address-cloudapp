@@ -40,7 +40,7 @@ export class MainComponent implements OnInit, OnDestroy {
       });
       
           this.eventsService.getInitData()
-      .subscribe(initData =>{ console.log(initData);
+      .subscribe(initData =>{ 
                               this.data.switchInstCode(initData)});
   }
 

@@ -66,7 +66,7 @@ export class AddressFormComponent extends FormComponent implements OnInit{
             }else{
                ref.addressIndex = parseInt(address); // save address index
                ref.address = new Address(ref.userData.contact_info.address[address]); // initialize new instance of address based on the address to be edited
-                console.log(ref.address);
+           
             }
       });  
   }

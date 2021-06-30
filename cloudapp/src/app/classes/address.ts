@@ -51,7 +51,7 @@ export class Address extends Contact{ // address class, can be used to set deful
         this.end_date = data.end_date ? data.end_date : "2099-12-31Z";
        
         
-        this.address_type = data.address_type ? data.address_type : [{value:"alternative", desc:"Alternative"}];
+        this.address_type = (data.address_type && data.address_note!="User Address Type: Adresa pro korespondenci") ? data.address_type : [{value:"alternative", desc:"Alternative"}];
         
     }
     
