@@ -7,7 +7,7 @@
     <p>{{data.dialog.verify}}</p>
     <mat-form-field>
         <mat-label>{{data.dialog.primaryId}}</mat-label>
-        <input autocomplete="off" matInput placeholder="country" name="line4" [(ngModel)]="userId" #verification="ngModel">
+        <input autocomplete="off" matInput placeholder="e.g. 12345678" name="line4" [(ngModel)]="userId" #verification="ngModel">
     </mat-form-field>
 
     <mat-error *ngIf="userId!=data.userId && verification.touched">{{data.dialog.idsNotMatch}}</mat-error>
