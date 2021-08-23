@@ -21,7 +21,7 @@ export class Address extends Contact{ // address class, can be used to set deful
     
     city: string;
     state_province : string;
-    postal_code : number;
+    postal_code : string;
     
     country: ValDesc;
     

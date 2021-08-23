@@ -74,9 +74,8 @@ export class AddressFormComponent extends FormComponent implements OnInit{
  
 
 
-  addSpaces(number:string){
+  addSpaces(number:string):string{
     number=number.replace(/(\d{3})(\d)/, '$1 $2');
-    console.log(number);
     return number;
 }
 
