@@ -87,7 +87,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
         userData.contact_info.address.forEach((a, ai)=>{
     
-           if(ref.isEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
+           if(ref.isAddressEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
                ref.addresses.push({index: ai, address: new Address(a)});
            }
             
@@ -95,7 +95,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
          userData.contact_info.email.forEach((a, ai)=>{
          
-           if(ref.isEditable([{value:a.preferred.toString()}], ref.data.config.allowedEmailTypes, "")){
+           if(ref.isEditable(a.email_type, ref.data.config.allowedEmailTypes, a.preferred)){
                ref.emails.push({index: ai, address: new Email(a)});
            }
             
@@ -103,7 +103,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
           userData.contact_info.phone.forEach((a, ai)=>{
       
-           if(ref.isEditable([{value:a.preferred.toString()}], ref.data.config.allowedPhoneTypes, "")){
+           if(ref.isEditable(a.phone_type, ref.data.config.allowedPhoneTypes, a.preferred)){
                ref.phones.push({index: ai, address: new Phone(a)});
            }
             
@@ -137,11 +137,11 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   }
 
 
-    isEditable(types, allowed, note:string = ""):boolean{ // the function determining whether to allow address editing
+    isEditable(types, allowed, preferred:boolean):boolean{ // the function determining whether to allow address editing
         let allow = false;
         types.forEach((t)=>{
            
-           if(allowed.indexOf(t.value)!=-1 || (t.value=="home" && note =="User Address Type: Adresa pro korespondenci")){
+           if(allowed.indexOf(t.value)!=-1 && preferred==true){
              allow = true;  
            } 
         });
@@ -149,6 +149,17 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         return allow;
     }
     
+       isAddressEditable(types, allowed, note:string = ""):boolean{ // the function determining whether to allow address editing
+        let allow = false;
+        types.forEach((t)=>{
+           
+           if(allowed.indexOf(t.value)!=-1 || (t.value=="home" && note =="User Address Type: Adresa pro korespondenci") ){
+             allow = true;  
+           } 
+        });
+        
+        return allow;
+    }
 
 
 

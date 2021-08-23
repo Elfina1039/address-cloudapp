@@ -17,7 +17,8 @@
 
             <mat-form-field>
                 <mat-label>{{data.language.phone}}:</mat-label>
-                <input required pattern="(\+?[0-9]{3})?[0-9]{9}" type="tel" matInput placeholder="phone" name="phone_number" [(ngModel)]="phone.phone_number" #phone_number="ngModel">
+                <input required pattern="(\+?[0-9]{3} )?[0-9]{3} [0-9]{3} [0-9]{3}" type="tel" matInput placeholder="phone" name="phone_number" [(ngModel)]="phone.phone_number" #phone_number="ngModel"
+                       (keyup)="phone.phone_number = addSpaces(phone.phone_number)">
                 <mat-error *ngIf="phone_number.errors?.required">
                     {{data.language.errors.required}}
                 </mat-error>

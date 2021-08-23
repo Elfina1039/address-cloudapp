@@ -46,12 +46,12 @@ export class Address extends Contact{ // address class, can be used to set deful
         
        this.country = data.country ? <ValDesc>data.country : {value:"", desc: ""};
         
-        this.address_note = data.address_note ? data.address_note : "";
+        this.address_note = data.address_note ? data.address_note : "User Address Type: Adresa pro korespondenci";
         this.start_date = data.start_date ? data.start_date : this.getDate();
         this.end_date = data.end_date ? data.end_date : "2099-12-31Z";
        
         
-        this.address_type = (data.address_type && data.address_note!="User Address Type: Adresa pro korespondenci") ? data.address_type : [{value:"alternative", desc:"Alternative"}];
+        this.address_type = (data.address_type && data.address_note!="User Address Type: Adresa pro korespondenci") ? data.address_type : [{value:"home", desc:"Home"}];
         
     }
     
@@ -95,7 +95,7 @@ export class Phone extends Contact{
     constructor(data){
         super(data);
          this.phone_number = data.phone_number ? data.phone_number : "";
-         this.phone_type = data.phone_types ? data.phone_types:  [{value:"mobile", desc:"Mobil"}];
+         this.phone_type = data.phone_types ? data.phone_types:  [{value:"home", desc:"Domů"}];
     }
     
        toHtml(){

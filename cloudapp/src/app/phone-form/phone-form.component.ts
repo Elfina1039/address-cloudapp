@@ -77,7 +77,11 @@ export class PhoneFormComponent extends FormComponent implements OnInit{
      return item1 && item2 ? item1.value===item2.value : false;
     }
     
-
+addSpaces(number:string){
+    number=number.replace(/(\+?\d{3})(\d)/, '$1 $2');
+    console.log(number);
+    return number;
+}
 
  
     

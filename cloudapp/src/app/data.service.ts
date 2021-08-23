@@ -20,9 +20,9 @@ export class DataService {
 instCode : any;
     
 langData : any = {};
-      configData : any = {"420CKIS_INST" : {allowedAddressTypes:["alternative"],
-                                            allowedEmailTypes:["true"],
-                                            allowedPhoneTypes:["true"],
+      configData : any = {"420CKIS_INST" : {allowedAddressTypes:["home"],
+                                            allowedEmailTypes:["personal"],
+                                            allowedPhoneTypes:["home"],
                                             fields : {line4:true,
                                                             preferred: true,
                                                             type : true}

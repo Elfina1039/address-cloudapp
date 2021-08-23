@@ -74,13 +74,13 @@ export class AddressFormComponent extends FormComponent implements OnInit{
  
 
 
-    formatPostalCode(code){
-        console.log(code);
-        if(code.length==3){
-            code = code +" ";
-            console.log(code);
-        }
-    }
+  addSpaces(number:string){
+    number=number.replace(/(\d{3})(\d)/, '$1 $2');
+    console.log(number);
+    return number;
+}
+
+ 
 
     updateCountry(){ // update country description based on the new value of country.value
         let value = this.address.country.value;

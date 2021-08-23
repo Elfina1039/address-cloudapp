@@ -17,7 +17,7 @@
 
             <mat-form-field>
                 <mat-label>{{data.language.street}}</mat-label>
-                <input required pattern="[^\d]+[0-9]{1,5}" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
+                <input required pattern="[^\d]+\s[0-9/]{1,10}" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
                 <mat-error *ngIf="line1.errors?.required">
                        {{data.language.errors.required}}
                 </mat-error>
@@ -41,7 +41,8 @@
 
             <mat-form-field>
                 <mat-label>{{data.language.postalCode}}</mat-label>
-                <input matInput required [pattern]="data.language.postal_code_pattern" placeholder="postal code" name="postal_code" [(ngModel)]="address.postal_code" (keydown)="formatPostalCode(address.postal_code)" #postal_code="ngModel">
+                <input matInput required [pattern]="data.language.postal_code_pattern" placeholder="postal code" name="postal_code" [(ngModel)]="address.postal_code" 
+                       (keyup)="address.postal_code=addSpaces(address.postal_code)" #postal_code="ngModel">
                 <mat-error *ngIf="postal_code.errors?.required">
                        {{data.language.errors.required}}
                 </mat-error>
