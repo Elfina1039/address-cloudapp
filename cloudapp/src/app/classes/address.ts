@@ -18,6 +18,7 @@ export class Address extends Contact{ // address class, can be used to set deful
     line2 : string;
     line3 : string;
     line4 : string;
+    line5 : string;
     
     city: string;
     state_province : string;
@@ -39,6 +40,7 @@ export class Address extends Contact{ // address class, can be used to set deful
          this.line2 = data.line2 ? data.line2 : "";
          this.line3 = data.line3 ? data.line3 : "";
          this.line4 =  data.line4 ? data.line4 : "Česká republika";
+        this.line5 = data.line5 ? data.line5 : "";
         
          this.city = data.city ? data.city : "";
          this.state_province = data.state_province ? data.state_province : "";
