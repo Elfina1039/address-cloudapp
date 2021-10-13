@@ -79,7 +79,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
            }else{
            this.extractAddresses(data);
                
-               if(this.data.currentlyAtLibCode!="UKN_PF"){
+               if(this.data.currentlyAtLibCode=="UKN_PF"){
                    this.checkNotes(data.user_note);
                }
         
