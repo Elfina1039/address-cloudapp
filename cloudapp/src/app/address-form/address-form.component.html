@@ -14,10 +14,16 @@
         </mat-card-header>
 
         <mat-card-content>
+            
+                <mat-form-field>
+                <mat-label> {{data.language.degree}}</mat-label>
+                <input matInput placeholder="title" name="line5" [(ngModel)]="address.line5" #line5="ngModel">
+                 
+            </mat-form-field>
 
             <mat-form-field>
                 <mat-label>{{data.language.street}}</mat-label>
-                <input required pattern="[^\d]+\s[0-9/]{1,10}" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
+                <input required pattern="[^\d]+\s.*[0-9]+.*" matInput placeholder="street" name="line1" [(ngModel)]="address.line1" #line1="ngModel">
                 <mat-error *ngIf="line1.errors?.required">
                        {{data.language.errors.required}}
                 </mat-error>

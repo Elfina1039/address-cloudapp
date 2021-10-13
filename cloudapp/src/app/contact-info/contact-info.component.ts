@@ -24,6 +24,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   addresses : any = [];
  emails : any = [];
      phones : any = [];
+    suggestedGroups = [];
+    
     
   subscription: Subscription;
     
@@ -76,9 +78,86 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
            this.router.navigate(["renew",btoa(this.userLink)]);
            }else{
            this.extractAddresses(data);
+               
+               if(this.data.currentlyAtLibCode!="UKN_PF"){
+                   this.checkNotes(data.user_note);
+               }
+        
            }
         
     }
+    
+    //check Notes to see if to offer a change of user type
+    
+    checkNotes(notes){
+        let parsed : any = [];
+        let rgx = new RegExp("^(Generováno)|(Aktualizováno)|(E-souhlas)");
+        let selected = notes.filter((n)=>!rgx.test(n.note_text));
+        
+        if(selected.length>1){
+            console.log("Nelze načíst poznámky");
+        }else if(selected.length==1){
+           
+            parsed = this.parseNote(selected[0]);
+        }
+        
+        
+        let units = parsed.map((p)=>p.unit);
+        
+        if(units.indexOf("PF")!=-1){
+              parsed.forEach((p)=>{
+                this.suggestUserGroup(p);
+        });
+            
+        }
+        
+      
+        
+    }
+    
+    suggestUserGroup(note){
+       if(this.data.groupChanges[note.type] && this.data.groupChanges[note.type].value!=this.userData.user_group.value){
+           this.suggestedGroups.push(this.data.groupChanges[note.type]);
+       }
+    
+    }
+    
+    updateUserGroup(group){
+        
+         this.userData.user_group = group;
+       this.save();
+        
+    }
+    
+  parseNote(note:any){
+      
+      let dateRgx = /\([0-9]{1,2}\. ?[0-9]{1,2}\. ?[0-9]{4}\)/g;
+      
+      let list = note.note_text.split(";");
+      
+      let parsed = list.map((i)=>{
+        
+          let parts = i.split(":");
+          
+          let type, date, unit;
+          
+          type = parts[0].trim();
+          
+          if(parts[1]){
+            date = parts[1].match(dateRgx);
+         unit = parts[1].replace(dateRgx, "").trim();
+          }
+          
+          
+          return {type:type, unit:unit, date:date};
+          
+      });
+      
+      console.log(parsed);
+      return parsed;
+      
+    }
+    
     
     // filter contacts to be shown
     extractAddresses(userData){
@@ -161,6 +240,32 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         return allow;
     }
 
+    
+     save() { // sent the PUT request to Alma API
+    const requestBody = this.userData;
+  console.log(requestBody);
+    this.loading = true;
+    let request: Request = {
+      url: this.userLink, 
+   // queryParams:{override:"contact_info.address.preferred"},
+      method: HttpMethod.PUT,
+      requestBody
+    };
+
+    this.restService.call(request)
+    .pipe(finalize(()=>this.loading=false))
+    .subscribe({
+      next: result => {
+         this.eventsService.refreshPage().subscribe(
+          ()=>this.alert.success('Record ' + result.primary_id + "updated.")
+        );
+      },
+      error: (e: RestErrorResponse) => {
+        this.alert.error('Failed to update data: ' + e.message);
+        console.error(e);
+      }
+    });    
+  }
 
 
 }

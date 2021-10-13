@@ -18,6 +18,13 @@ export class DataService {
  addressTypes = [];
  language : any;
 instCode : any;
+  currentlyAtLibCode : string;  
+    
+groupChanges : any = {
+  "rigo" : {value:"12", desc:"Spolupracovník UK"},
+  "kurz LLM" : {value:"01", desc:"Student UK"},
+    "0. ročník" : {value:"01", desc:"Student UK"}
+};    
     
 langData : any = {};
       configData : any = {"420CKIS_INST" : {allowedAddressTypes:["none"],
@@ -49,7 +56,7 @@ fields : {line4:false,
       
       this.langData["english"]={
 "language": "English",
-"postal_code_pattern" : "[0-9]{5}",
+"postal_code_pattern" : "[0-9]{3}\\s[0-9]{2}",
     "navigateToUsers" : "Please navigate to user records.",
     "select_user" : "Select user",
     "renewal" : "Registration has expired",
@@ -65,6 +72,7 @@ fields : {line4:false,
                   street: "This field is invalid.",
                   postalCode: "Please enter a valid postal code."
                 },
+          degree: "Degree",
           phone: "Phone number",
           street: "Street and house number",
           city: "City",
@@ -100,7 +108,7 @@ fields : {line4:false,
                 street: "Pole je neplatné.",
                   postalCode: "PSČ je neplatné"
                  },
-        
+        degree: "Titul:",
           phone: "Telefonní číslo",
           street : "Ulice a číslo popisné",
           city: "Město",
@@ -144,12 +152,13 @@ fields : {line4:false,
              this.config = this.defaultConfig;
          }
       
+         this.currentlyAtLibCode = initData.currentlyAtLibCode;
          
          
-         if(initData.lang=="cs"){
-             this.switchLanguage("czech");
+         if(initData.lang=="en"){
+             this.switchLanguage("english");
          }else{
-              this.switchLanguage("english");
+              this.switchLanguage("czech");
          }
   }
     
