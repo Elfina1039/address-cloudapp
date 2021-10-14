@@ -151,8 +151,8 @@ fields : {line4:false,
          }else{
              this.config = this.defaultConfig;
          }
-      
-         this.currentlyAtLibCode = initData.currentlyAtLibCode;
+      // replace with currentlyAtLibCode
+         this.currentlyAtLibCode = initData.primaryId;
          
          
          if(initData.lang=="en"){
