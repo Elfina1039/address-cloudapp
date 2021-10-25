@@ -163,10 +163,21 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     extractAddresses(userData){
  
         let ref = this;
+                  let line5:string = "";
         
         userData.contact_info.address.forEach((a, ai)=>{
+           //extract line 5 if if exists
+               
+
+            if(a.line5 && a.line5!=""){
+              
+                line5=a.line5;
+            }
     
            if(ref.isAddressEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
+               //copy line 5
+               a.line5=line5;
+               console.log(a);
                ref.addresses.push({index: ai, address: new Address(a)});
            }
             
@@ -189,7 +200,11 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         });
         
         if(this.addresses.length==0){
-            this.addresses.push({index:-1, address: new Address({line1:""})});
+            let newAddress = new Address({line5:line5});
+              userData.contact_info.address.unshift(newAddress);
+            this.addresses.unshift({index:0, address: newAddress});
+            
+            console.log(this.addresses);
         }
         
           if(this.emails.length==0){
