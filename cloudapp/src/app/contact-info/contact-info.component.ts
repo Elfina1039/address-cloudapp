@@ -173,6 +173,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
               
                 line5=a.line5;
             }
+            
+            this.data.line5 = line5;
     
            if(ref.isAddressEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
                //copy line 5
@@ -201,8 +203,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
         if(this.addresses.length==0){
             let newAddress = new Address({line5:line5});
-              userData.contact_info.address.unshift(newAddress);
-            this.addresses.unshift({index:0, address: newAddress});
+            this.addresses.unshift({index:-1, address: newAddress});
             
             console.log(this.addresses);
         }

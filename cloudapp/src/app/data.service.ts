@@ -14,6 +14,8 @@ export class DataService {
      private instSource = new BehaviorSubject({});
   currentInst = this.instSource.asObservable();
 
+    line5 : string = "";
+    
  countries : any;
  addressTypes = [];
  language : any;

@@ -60,7 +60,7 @@ export class AddressFormComponent extends FormComponent implements OnInit{
           ref.userLink = user;
       
             if(address=="-1"){ // if there is no reference to address, initialize an empty instance of Address
-                ref.address = new Address({line1:""});
+                ref.address = new Address({line1:"", line5:ref.data.line5});
                 ref.action="Add"; // change form action
              
             }else{
