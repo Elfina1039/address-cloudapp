@@ -110,9 +110,28 @@ confirm(data){ // open dialog asking for confirmation
     }
     
     dispreferr(contacts){
-        contacts.forEach((c)=>{
+               contacts.forEach((c)=>{
             c.preferred = false;
         });
+        
+        
+    }
+    
+    preferrSingle(){
+           if(this.userData.contact_info.address.length==1){
+             this.userData.contact_info.address.forEach((c)=>{
+            c.preferred = true;
+        });}
+        
+          if(this.userData.contact_info.email.length==1){
+             this.userData.contact_info.email.forEach((c)=>{
+            c.preferred = true;
+        });}
+        
+          if(this.userData.contact_info.phone.length==1){
+             this.userData.contact_info.phone.forEach((c)=>{
+            c.preferred = true;
+        });}
     }
     
     
@@ -121,11 +140,18 @@ update(data, field, index){ // modify the address in userData and call save()
     this.confirm(data).afterClosed().subscribe((result)=>{
         if(result=="true"){
             if(data.preferred==true){
+                console.log("contact is preferred");
                 this.dispreferr(this.userData.contact_info[field]);
+                data.preferred=true;
             }
             
             this.userData.contact_info[field][index] = data;
+            
+           
+            
+            console.log(this.userData.contact_info[field][index]);
     this.save();
+    
         }
          
     });
@@ -138,9 +164,11 @@ add(data, field){ // add the new address to userData and call save
         if(result=="true"){
             if(data.preferred==true){
                 this.dispreferr(this.userData.contact_info[field]);
+                 data.preferred=true;
             }
             this.userData.contact_info[field].push(data);
     this.save();
+         
         }
     });
 } 
@@ -160,19 +188,25 @@ add(data, field){ // add the new address to userData and call save
       requestBody
     };
 
+      let ref = this;
+      this.preferrSingle();
+      
     this.restService.call(request)
     .pipe(finalize(()=>this.loading=false))
     .subscribe({
       next: result => {
          this.eventsService.refreshPage().subscribe(
-          ()=>this.alert.success('Record ' + result.primary_id + "updated.")
+          ()=>{this.alert.success('Record ' + result.primary_id + "updated.");
+               ref.action="Edit";
+              }
         );
       },
       error: (e: RestErrorResponse) => {
         this.alert.error('Failed to update data: ' + e.message);
         console.error(e);
       }
-    });    
+    }); 
+         
   }
 
     
