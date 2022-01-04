@@ -79,6 +79,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
            }else{
            this.extractAddresses(data);
                
+                  this.eventsService.getInitData()
+      .subscribe(initData =>{ 
+               console.log("JUST in time call");
+              console.log(initData);
+                            });
+               
                if(this.data.currentlyAtLibCode=="APPCLOUD"){
                    this.checkNotes(data.user_note);
                }
@@ -111,11 +117,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
             
         }
         
-           this.eventsService.getInitData()
-      .subscribe(initData =>{ 
-               console.log("JUST in time call");
-              console.log(initData);
-                              this.data.switchInstCode(initData)});
+        
       
         
     }
