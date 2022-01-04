@@ -111,6 +111,11 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
             
         }
         
+           this.eventsService.getInitData()
+      .subscribe(initData =>{ 
+               console.log("JUST in time call");
+              console.log(initData);
+                              this.data.switchInstCode(initData)});
       
         
     }
