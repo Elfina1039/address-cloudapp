@@ -59,7 +59,7 @@ export class Address extends Contact{ // address class, can be used to set deful
     
     getDate(date: Date = new Date()){
         //let date = new Date();
-        let m = date.getMonth().toString().length==2 ? date.getMonth() : "0"+date.getMonth();
+        let m = (date.getMonth()+1).toString().length==2 ? (date.getMonth()+1) : "0"+(date.getMonth()+1);
         let d = date.getDate().toString().length==2 ? date.getDate() : "0"+date.getDate();
         let str : string = date.getFullYear()+"-"+m+"-"+d+"Z";
 
