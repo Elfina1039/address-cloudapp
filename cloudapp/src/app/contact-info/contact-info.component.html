@@ -17,6 +17,19 @@ Změnit skupinu:
 </div>
 
 
+<div *ngIf="suggestedNoteRemovals.length>0">
+    <p>
+    Skupina: {{userData.user_group.desc}}
+    </p>
+    
+    
+<p>    
+Odebrat výjimku:
+    <button mat-flat-button color="secondary" *ngFor="let r of suggestedNoteRemovals" (click)="removeException(r)">{{r.type}}</button>
+    </p>
+</div>
+
+
 
 <h2>{{data?.language?.addresses}}</h2>
 

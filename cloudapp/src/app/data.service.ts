@@ -154,7 +154,10 @@ fields : {line4:false,
              this.config = this.defaultConfig;
          }
       // replace with currentlyAtLibCode
-         this.currentlyAtLibCode = initData.primaryId;
+         
+         console.log("CAL code: " + initData.user.currentlyAtLibCode);
+         
+         this.currentlyAtLibCode = initData.user.currentlyAtLibCode;
          
          
          if(initData.lang=="en"){

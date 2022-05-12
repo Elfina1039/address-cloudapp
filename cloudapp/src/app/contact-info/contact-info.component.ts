@@ -24,7 +24,9 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   addresses : any = [];
  emails : any = [];
      phones : any = [];
-    suggestedGroups = [];
+    suggestedGroups : any = [];
+    
+    suggestedNoteRemovals : any = [];
     
     
   subscription: Subscription;
@@ -72,7 +74,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     // redirect to /renew/ if account has expired
     loadData(data){
           this.userData = data;
-        console.log(data);
+    
         this.data.switchUser(data);
         if(data.expiry_date && new Date(data.expiry_date)<=new Date()){
            this.router.navigate(["renew",btoa(this.userLink)]);
@@ -81,11 +83,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                
                   this.eventsService.getInitData()
       .subscribe(initData =>{ 
-               console.log("JUST in time call");
+             
               console.log(initData);
                             });
                
-               if(this.data.currentlyAtLibCode=="APPCLOUD"){
+               if(this.data.currentlyAtLibCode=="PF"){
+               
                    this.checkNotes(data.user_note);
                }
         
@@ -111,6 +114,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         let units = parsed.map((p)=>p.unit);
         
         if(units.indexOf("PF")!=-1){
+         
               parsed.forEach((p)=>{
                 this.suggestUserGroup(p);
         });
@@ -126,14 +130,29 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
        if(this.data.groupChanges[note.type] && this.data.groupChanges[note.type].value!=this.userData.user_group.value){
            this.suggestedGroups.push(this.data.groupChanges[note.type]);
        }
+        else if(this.data.groupChanges[note.type] && this.data.groupChanges[note.type].value==this.userData.user_group.value)
+        {
+          this.suggestedNoteRemovals.push(note); 
+           
+       }
     
     }
     
     updateUserGroup(group){
+        let ref = this;
         
          this.userData.user_group = group;
        this.save();
         
+    }
+    
+    
+    removeException(r){
+        let ref = this;
+        let rgx = new RegExp(";\s?"+r.type);
+        this.userData.user_note.forEach((un)=>{un.note_text=un.note_text.replace(rgx,"")}); 
+      
+        this.save();
     }
     
   parseNote(note:any){
@@ -186,7 +205,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
            if(ref.isAddressEditable(a.address_type, ref.data.config.allowedAddressTypes, a.address_note)){
                //copy line 5
                a.line5=line5;
-               console.log(a);
+           
                ref.addresses.push({index: ai, address: new Address(a)});
            }
             
@@ -211,8 +230,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         if(this.addresses.length==0){
             let newAddress = new Address({line5:line5});
             this.addresses.unshift({index:-1, address: newAddress});
-            
-            console.log(this.addresses);
+           
         }
         
           if(this.emails.length==0){
@@ -266,6 +284,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
      save() { // sent the PUT request to Alma API
     const requestBody = this.userData;
+         let ref = this;
   console.log(requestBody);
     this.loading = true;
     let request: Request = {
@@ -282,10 +301,14 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
          this.eventsService.refreshPage().subscribe(
           ()=>this.alert.success('Record ' + result.primary_id + "updated.")
         );
+        
+          ref.suggestedNoteRemovals = [];
+        ref.suggestedGroups = [];
       },
       error: (e: RestErrorResponse) => {
         this.alert.error('Failed to update data: ' + e.message);
         console.error(e);
+          
       }
     });    
   }
