@@ -87,9 +87,14 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
               console.log(initData);
                             });
                
-               if(this.data.currentlyAtLibCode=="PF"){
+               console.log(this.data.user);
+               if(this.data.user=="APPCLOUD" || this.data.user.toLowerCase()=="admin"){
+                   
+               if(this.data.currentlyAtLibCode=="MAIN"){
                
                    this.checkNotes(data.user_note);
+               }
+                   
                }
         
            }

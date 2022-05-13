@@ -21,6 +21,7 @@ export class DataService {
  language : any;
 instCode : any;
   currentlyAtLibCode : string;  
+    user : string;
     
 groupChanges : any = {
   "rigo" : {value:"12", desc:"Spolupracovník UK"},
@@ -155,10 +156,13 @@ fields : {line4:false,
          }
       // replace with currentlyAtLibCode
          
-         console.log("CAL code: " + initData.user.currentlyAtLibCode);
+         
          
          this.currentlyAtLibCode = initData.user.currentlyAtLibCode;
+         this.user = initData.user.primaryId;
          
+         console.log("CAL code: " + initData.user.currentlyAtLibCode);
+         console.log("user: " + this.user);
          
          if(initData.lang=="en"){
              this.switchLanguage("english");
