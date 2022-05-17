@@ -4,6 +4,8 @@
 
 <h1>{{userData.full_name}} ({{userData.primary_id}})</h1>
 
+<mat-card *ngIf="suggestedGroups.length>0 || suggestedNoteRemovals.length>0">
+
 <div *ngIf="suggestedGroups.length>0">
     <p>
     Skupina: {{userData.user_group.desc}}
@@ -11,8 +13,22 @@
     
     
 <p>    
-Změnit skupinu:
-    <button mat-flat-button color="secondary" *ngFor="let g of suggestedGroups" (click)="updateUserGroup(g)">{{g.desc}}</button>
+Udělit výjimku:<br/>
+  
+    
+    
+    <mat-form-field >
+  <mat-label>Udělit výjimku</mat-label>
+  <mat-select [(ngModel)]="selectedException" name="selectedException">
+   
+    <mat-option *ngFor="let g of suggestedGroups"  [value]="g">{{g.exception}} </mat-option>
+
+  </mat-select>
+</mat-form-field><br/>
+
+    <button mat-flat-button color="secondary" (click)="addException(selectedException)">Potvrdit</button>
+  
+      
     </p>
 </div>
 
@@ -24,12 +40,12 @@ Změnit skupinu:
     
     
 <p>    
-Odebrat výjimku:
-    <button mat-flat-button color="secondary" *ngFor="let r of suggestedNoteRemovals" (click)="removeException(r)">{{r.type}}</button>
+Udělena výjimka: {{suggestedNoteRemovals[0]}} <br/>
+    <button mat-flat-button color="secondary" *ngFor="let r of suggestedNoteRemovals" (click)="removeException(r)">Odebrat</button>
     </p>
 </div>
 
-
+</mat-card>
 
 <h2>{{data?.language?.addresses}}</h2>
 

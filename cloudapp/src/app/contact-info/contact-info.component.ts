@@ -24,9 +24,12 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   addresses : any = [];
  emails : any = [];
      phones : any = [];
+    
+    note : any;
     suggestedGroups : any = [];
     
     suggestedNoteRemovals : any = [];
+    selectedException : string = "";
     
     
   subscription: Subscription;
@@ -90,7 +93,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                console.log(this.data.user);
                if(this.data.user=="APPCLOUD" || this.data.user.toLowerCase()=="admin"){
                    
-               if(this.data.currentlyAtLibCode=="PF"){
+               if(this.data.currentlyAtLibCode.match("PF")){
                
                    this.checkNotes(data.user_note);
                }
@@ -103,27 +106,64 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
     //check Notes to see if to offer a change of user type
     
+    findNote(){
+        
+        let ref = this;
+        
+         let rgx = new RegExp("^(Generováno)|(Aktualizováno)|(E-souhlas)");
+       this.userData.user_note.forEach((n)=>{
+           if(!rgx.test(n.note_text)){
+               console.log(n);
+               ref.note = n;
+       
+       }});
+        
+     
+    }
+    
+    
     checkNotes(notes){
         let parsed : any = [];
         let rgx = new RegExp("^(Generováno)|(Aktualizováno)|(E-souhlas)");
         let selected = notes.filter((n)=>!rgx.test(n.note_text));
         
         if(selected.length>1){
+            this.note = 
             console.log("Nelze načíst poznámky");
         }else if(selected.length==1){
-           
+           this.findNote();
             parsed = this.parseNote(selected[0]);
         }
         
         
-        let units = parsed.map((p)=>p.unit);
+        let units = ["-"];
+        let exceptions = parsed.map((p)=>p.type);
+        
+        console.log(exceptions);
+        
+        parsed.forEach((p)=>{
+            console.log(p.units);
+           units =  units.concat(p.units);
+            console.log(units);
+        });
+       
+        console.log(units);
+       
         
         if(units.indexOf("PF")!=-1){
-         
-              parsed.forEach((p)=>{
-                this.suggestUserGroup(p);
-        });
             
+            let exception : string = this.findException(exceptions);
+            
+            console.log(exception);
+         
+            if(!exception){
+                this.suggestExceptions();
+                
+            }else{
+                this.suggestExcRemoval(exception);
+            }
+        
+      
         }
         
         
@@ -131,22 +171,45 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
     }
     
-    suggestUserGroup(note){
-       if(this.data.groupChanges[note.type] && this.data.groupChanges[note.type].value!=this.userData.user_group.value){
-           this.suggestedGroups.push(this.data.groupChanges[note.type]);
-       }
-        else if(this.data.groupChanges[note.type] && this.data.groupChanges[note.type].value==this.userData.user_group.value)
-        {
-          this.suggestedNoteRemovals.push(note); 
-           
-       }
-    
+    suggestExceptions(){
+        
+        for(let n in this.data.groupChanges){
+            let group = this.data.groupChanges[n];
+            this.suggestedGroups.push({exception:n, group:group});
+        }
+        
     }
     
-    updateUserGroup(group){
+     suggestExcRemoval(exception : string){
+    
+         this.suggestedNoteRemovals.push(exception); 
+    }
+    
+    findException(exceptions : any){
+        let exception = "";
+        exceptions.forEach((e)=>{
+            console.log(e);
+            if(this.data.groupChanges[e.trim()]){
+                console.log("sending " +e);
+               exception  = e;
+            }
+        });
+     
+        return exception;
+    }
+    
+  
+    
+    addException(e){
         let ref = this;
+        console.log(e);
+       this.note.note_text = this.note.note_text+";"+e.exception;
         
-         this.userData.user_group = group;
+        if(this.userData.user_group != e.group){
+                this.userData.user_group = e.group;
+        }
+     
+        
        this.save();
         
     }
@@ -154,8 +217,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
     removeException(r){
         let ref = this;
-        let rgx = new RegExp(";\s?"+r.type);
-        this.userData.user_note.forEach((un)=>{un.note_text=un.note_text.replace(rgx,"")}); 
+        let rgx = new RegExp(";\s?"+r);
+        this.note.note_text=this.note.note_text.replace(rgx,""); 
       
         this.save();
     }
@@ -170,17 +233,18 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
         
           let parts = i.split(":");
           
-          let type, date, unit;
+          let type, date, units;
           
           type = parts[0].trim();
           
           if(parts[1]){
             date = parts[1].match(dateRgx);
-         unit = parts[1].replace(dateRgx, "").trim();
+        let  unit = parts[1].replace(dateRgx, "").trim();
+          units = unit.split(",").map((u)=>u.trim());  
           }
           
           
-          return {type:type, unit:unit, date:date};
+          return {type:type, units:units, date:date};
           
       });
       

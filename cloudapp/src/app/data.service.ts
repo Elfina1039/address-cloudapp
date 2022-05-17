@@ -23,6 +23,9 @@ instCode : any;
   currentlyAtLibCode : string;  
     user : string;
     
+    
+    
+    
 groupChanges : any = {
   "rigo" : {value:"12", desc:"Spolupracovník UK"},
   "kurz LLM" : {value:"01", desc:"Student UK"},
