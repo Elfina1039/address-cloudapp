@@ -17,6 +17,9 @@ import { Address, ValDesc, Email, Phone } from '../classes/address';
 })
 export class ContactInfoComponent implements OnInit, OnDestroy {
 
+    //testers allowed to access the "exception function"
+    testers = ["APPCLOUD", "ADMIN", "UKN_DROBIKOVA", "UKN_SIVAKOVA"];
+    
   loading = false;
   userData: any; 
   userLink : string;
@@ -91,7 +94,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                             });
                
                console.log(this.data.user);
-               if(this.data.user=="APPCLOUD" || this.data.user.toLowerCase()=="admin"){
+               if(this.testers.indexOf(this.data.user.toUpperCase())!=-1){
                    
                if(this.data.currentlyAtLibCode.match("PF")){
                
@@ -203,7 +206,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     addException(e){
         let ref = this;
         console.log(e);
-       this.note.note_text = this.note.note_text+";"+e.exception;
+       this.note.note_text = this.note.note_text+"; "+e.exception;
         
         if(this.userData.user_group != e.group){
                 this.userData.user_group = e.group;
@@ -217,7 +220,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
     removeException(r){
         let ref = this;
-        let rgx = new RegExp(";\s?"+r);
+        let rgx = new RegExp("; ?"+r);
         this.note.note_text=this.note.note_text.replace(rgx,""); 
       
         this.save();
