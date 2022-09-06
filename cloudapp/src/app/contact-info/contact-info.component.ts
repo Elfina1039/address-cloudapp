@@ -96,7 +96,7 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                console.log(this.data.user);
                if(this.testers.indexOf(this.data.user.toUpperCase())!=-1){
                    
-               if(this.data.currentlyAtLibCode.match("PF")){
+               if(this.data.currentlyAtLibCode.match("MAIN")){
                
                    this.checkNotes(data.user_note);
                }
@@ -259,6 +259,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     
     // filter contacts to be shown
     extractAddresses(userData){
+
+      console.log(userData);
  
         let ref = this;
                   let line5:string = "";

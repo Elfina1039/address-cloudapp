@@ -27,9 +27,9 @@ instCode : any;
     
     
 groupChanges : any = {
-  "rigo" : {value:"12", desc:"Spolupracovník UK"},
-  "kurz LLM" : {value:"01", desc:"Student UK"},
-    "0. ročník" : {value:"01", desc:"Student UK"}
+  "rigo" : {desc:"12 - Spolupracovník UK", value:"12"},
+  "kurz LLM" : {value:"01", desc:"01 - Student"},
+    "0. ročník" : {value:"01", desc:"01 - Student"}
 };    
     
 langData : any = {};
