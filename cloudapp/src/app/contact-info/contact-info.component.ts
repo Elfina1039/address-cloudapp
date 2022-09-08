@@ -98,7 +98,7 @@ console.log("contact info init");
                console.log(this.data.user);
                if(this.testers.indexOf(this.data.user.toUpperCase())!=-1){
                    
-               if(this.data.currentlyAtLibCode.match("MAIN")){
+               if(this.data.currentlyAtLibCode.match("PF")){
                
                    this.checkNotes(data.user_note);
                    console.log("checking notes");
