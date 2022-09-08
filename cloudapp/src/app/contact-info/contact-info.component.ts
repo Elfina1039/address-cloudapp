@@ -52,6 +52,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
   ngOnInit() { // read user link from URL and call loadUserData
       let ref = this;
       
+console.log("contact info init");
+
       this.route.paramMap.subscribe(function(p){
         let user : string=p.get('user');       
         ref.userLink = user; 
@@ -99,8 +101,13 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
                if(this.data.currentlyAtLibCode.match("MAIN")){
                
                    this.checkNotes(data.user_note);
+                   console.log("checking notes");
+               }else{
+                console.log("NOT PF");
                }
                    
+               }else{
+                console.log("you are not a tester");
                }
         
            }

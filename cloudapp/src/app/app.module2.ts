@@ -4,12 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule, CloudAppTranslateModule, AlertModule } from '@exlibris/exl-cloudapp-angular-lib';
+import { MaterialModule, AlertModule } from '@exlibris/exl-cloudapp-angular-lib';
+
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
-
 import { ContactInfoComponent } from './contact-info/contact-info.component';
 import { FormComponent } from './form/form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
@@ -18,6 +19,7 @@ import { PhoneFormComponent } from './phone-form/phone-form.component';
 import { DialogComponent } from './dialog/dialog.component';
 import { AddressComponent } from './address/address.component';
 import { DataService } from './data.service';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,7 @@ import { DataService } from './data.service';
       DialogComponent,
       AddressComponent
   ],
-  entryComponents:  [DialogComponent],
+    entryComponents:  [DialogComponent],
   imports: [
     MaterialModule,
     BrowserModule,
@@ -40,12 +42,12 @@ import { DataService } from './data.service';
     HttpClientModule,
     AlertModule,
     FormsModule,
-    ReactiveFormsModule,     
-    CloudAppTranslateModule.forRoot(),
+    ReactiveFormsModule     
+   //getTranslateModule()
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'standard' } },
-    DataService
+      DataService
   ],
   bootstrap: [AppComponent]
 })
