@@ -369,7 +369,7 @@ console.log("contact info init");
   console.log(requestBody);
     this.loading = true;
     let request: Request = {
-      url: this.userLink, 
+      url: this.userLink+"?override=user_group", 
    // queryParams:{override:"contact_info.address.preferred"},
       method: HttpMethod.PUT,
       requestBody
