@@ -96,19 +96,17 @@ console.log("contact info init");
                             });
                
                console.log(this.data.user);
-               if(this.testers.indexOf(this.data.user.toUpperCase())!=-1){
+               
                    
                if(this.data.currentlyAtLibCode.match("PF")){
                
                    this.checkNotes(data.user_note);
-                   console.log("checking notes");
+                 
                }else{
                 console.log("NOT PF");
                }
                    
-               }else{
-                console.log("you are not a tester");
-               }
+              
         
            }
         
@@ -123,7 +121,7 @@ console.log("contact info init");
          let rgx = new RegExp("^(Generováno)|(Aktualizováno)|(E-souhlas)");
        this.userData.user_note.forEach((n)=>{
            if(!rgx.test(n.note_text)){
-               console.log(n);
+               //console.log(n);
                ref.note = n;
        
        }});
@@ -149,22 +147,22 @@ console.log("contact info init");
         let units = ["-"];
         let exceptions = parsed.map((p)=>p.type);
         
-        console.log(exceptions);
+        //console.log(exceptions);
         
         parsed.forEach((p)=>{
-            console.log(p.units);
+            //console.log(p.units);
            units =  units.concat(p.units);
-            console.log(units);
+            //console.log(units);
         });
        
-        console.log(units);
+        //console.log(units);
        
         
         if(units.indexOf("PF")!=-1){
             
             let exception : string = this.findException(exceptions);
             
-            console.log(exception);
+            //console.log(exception);
          
             if(!exception){
                 this.suggestExceptions();
@@ -198,9 +196,9 @@ console.log("contact info init");
     findException(exceptions : any){
         let exception = "";
         exceptions.forEach((e)=>{
-            console.log(e);
+           // console.log(e);
             if(this.data.groupChanges[e.trim()]){
-                console.log("sending " +e);
+               // console.log("sending " +e);
                exception  = e;
             }
         });
@@ -212,7 +210,7 @@ console.log("contact info init");
     
     addException(e){
         let ref = this;
-        console.log(e);
+        //console.log(e);
        this.note.note_text = this.note.note_text+"; "+e.exception;
         
         if(this.userData.user_group != e.group){
@@ -258,7 +256,7 @@ console.log("contact info init");
           
       });
       
-      console.log(parsed);
+      //console.log(parsed);
       return parsed;
       
     }
