@@ -6,7 +6,7 @@
 
 <!--*ngIf="suggestedGroups.length>0 || suggestedNoteRemovals.length>0"-->
 
-<mat-card >
+<mat-card *ngIf="data.user=='APPCLOUD'">
 
     <p *ngIf="userData.user_group">
      Skupina: <b>{{userData.user_group.desc}}</b>

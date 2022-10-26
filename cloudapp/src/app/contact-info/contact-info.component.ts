@@ -100,12 +100,12 @@ console.log("contact info init");
                console.log(this.data.user);
                
                    
-               if(this.data.currentlyAtLibCode.match("MAIN") || this.data.currentlyAtLibCode.match("FF")){
+               if(this.data.currentlyAtLibCode.match("PF") || this.data.currentlyAtLibCode.match("FF")){
                
                    this.checkNotes(data.user_note);
                  
                }else{
-                console.log("NOT PF");
+                console.log("NOT PF/FF");
                }
                    
               
@@ -161,7 +161,7 @@ console.log("contact info init");
        
         
 
-        if(units.indexOf("PF")!=-1 && this.data.currentlyAtLibCode.match("FF01")){
+        if(units.indexOf("PF")!=-1 && this.data.currentlyAtLibCode.match("PF")){
             
             let exception : string = this.findException(exceptions);
             
@@ -177,7 +177,7 @@ console.log("contact info init");
       
         }
 
-        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("MAIN")){
+        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("PF")){
           this.allowJobCatChanges = true;
           console.log("FF user");
     
