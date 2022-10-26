@@ -40,6 +40,8 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     instSubscription : Subscription;
     instCode : any;
 
+  allowJobCatChanges : boolean = false;
+
   constructor(
     private restService: CloudAppRestService,
     private eventsService: CloudAppEventsService,
@@ -98,7 +100,7 @@ console.log("contact info init");
                console.log(this.data.user);
                
                    
-               if(this.data.currentlyAtLibCode.match("PF")){
+               if(this.data.currentlyAtLibCode.match("MAIN") || this.data.currentlyAtLibCode.match("FF")){
                
                    this.checkNotes(data.user_note);
                  
@@ -155,10 +157,11 @@ console.log("contact info init");
             //console.log(units);
         });
        
-        //console.log(units);
+        console.log(units);
        
         
-        if(units.indexOf("PF")!=-1){
+
+        if(units.indexOf("PF")!=-1 && this.data.currentlyAtLibCode.match("FF01")){
             
             let exception : string = this.findException(exceptions);
             
@@ -173,6 +176,12 @@ console.log("contact info init");
         
       
         }
+
+        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("MAIN")){
+          this.allowJobCatChanges = true;
+          console.log("FF user");
+    
+      }
         
         
       
@@ -210,7 +219,9 @@ console.log("contact info init");
     
     addException(e){
         let ref = this;
-        //console.log(e);
+        console.log("adding exception");
+        console.log(e);
+       
        this.note.note_text = this.note.note_text+"; "+e.exception;
         
         if(this.userData.user_group != e.group){
@@ -218,7 +229,7 @@ console.log("contact info init");
         }
      
         
-       this.save();
+      
         
     }
     
@@ -227,8 +238,7 @@ console.log("contact info init");
         let ref = this;
         let rgx = new RegExp("; ?"+r);
         this.note.note_text=this.note.note_text.replace(rgx,""); 
-      
-        this.save();
+        this.suggestedNoteRemovals=[];
     }
     
   parseNote(note:any){
@@ -360,6 +370,10 @@ console.log("contact info init");
         return allow;
     }
 
+
+    compareObjects(o1: any, o2: any): boolean {
+      return o1.value === o2.value;
+    }
     
      save() { // sent the PUT request to Alma API
     const requestBody = this.userData;
@@ -367,7 +381,7 @@ console.log("contact info init");
   console.log(requestBody);
     this.loading = true;
     let request: Request = {
-      url: this.userLink+"?override=user_group", 
+      url: this.userLink+"?override=user_group,job_category,preferred_language", 
    // queryParams:{override:"contact_info.address.preferred"},
       method: HttpMethod.PUT,
       requestBody

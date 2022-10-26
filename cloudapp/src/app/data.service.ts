@@ -31,6 +31,17 @@ groupChanges : any = {
   "kurz LLM" : {value:"01", desc:"01 - Student"},
     "0. ročník" : {value:"01", desc:"01 - Student"}
 };    
+
+preferredLanguages : ValDesc[] = [
+  {value:"en", desc:"English"},
+  {value:"cs", desc:"Čeština"}
+];
+
+jobCats : ValDesc[] = [
+  {value:"Notebooky FF", desc:"Notebooky FF"},
+  {value:"", desc:""}
+
+];
     
 langData : any = {};
       configData : any = {"420CKIS_INST" : {allowedAddressTypes:["none"],

@@ -4,30 +4,44 @@
 
 <h1>{{userData.full_name}} ({{userData.primary_id}})</h1>
 
+<!--*ngIf="suggestedGroups.length>0 || suggestedNoteRemovals.length>0"-->
 
+<mat-card >
 
-<mat-card *ngIf="suggestedGroups.length>0 || suggestedNoteRemovals.length>0">
-
-    <p>
+    <p *ngIf="userData.user_group">
      Skupina: <b>{{userData.user_group.desc}}</b>
 </p>
-    
+<mat-form-field >
+    <mat-label>Jazyk</mat-label>
+<mat-select [(ngModel)]="userData.preferred_language"  name="preferredLanguage" [compareWith]="compareObjects">
+   
+    <mat-option *ngFor="let l of data.preferredLanguages"  [value]="l">{{l.desc}} </mat-option>
+
+  </mat-select>
+</mat-form-field><br/>
+
+  <mat-form-field *ngIf="allowJobCatChanges" >
+    <mat-label>Výpůjčka ntb</mat-label>
+  <mat-select [(ngModel)]="userData.job_category" name="JobCategory" [compareWith]="compareObjects">
+   
+    <mat-option *ngFor="let l of data.jobCats"  [value]="l">{{l.desc}} </mat-option>
+
+  </mat-select>
+</mat-form-field><br/>
+
 <div *ngIf="suggestedGroups.length>0">
- 
-    
-  
-    
+
     
     <mat-form-field >
   <mat-label>Udělit výjimku</mat-label>
-  <mat-select [(ngModel)]="selectedException" name="selectedException">
+  <mat-select [(value)]="selectedException" name="selectedException" (selectionChange)="addException(selectedException)">
    
     <mat-option *ngFor="let g of suggestedGroups"  [value]="g">{{g.exception}} </mat-option>
 
   </mat-select>
 </mat-form-field><br/>
 
-    <button mat-flat-button color="secondary" (click)="addException(selectedException)">Potvrdit</button>
+    
   
       
    
@@ -36,7 +50,6 @@
 
 <div *ngIf="suggestedNoteRemovals.length>0">
     <p>
-  
         Udělena výjimka:<b> {{suggestedNoteRemovals[0]}}</b> <br/>
     </p>
     
@@ -46,6 +59,11 @@
     <button mat-flat-button color="secondary" *ngFor="let r of suggestedNoteRemovals" (click)="removeException(r)">Odebrat</button>
  
 </div>
+<mat-card-actions align="end">
+    <button mat-flat-button color="primary" (click)="save()">Uložit</button>
+
+</mat-card-actions>
+
 
 </mat-card>
 
