@@ -6,21 +6,14 @@
 
 <!--*ngIf="suggestedGroups.length>0 || suggestedNoteRemovals.length>0"-->
 
-<mat-card *ngIf="data.user=='APPCLOUD'">
+<mat-card *ngIf="exceptions">
 
     <p *ngIf="userData.user_group">
      Skupina: <b>{{userData.user_group.desc}}</b>
 </p>
-<mat-form-field >
-    <mat-label>Jazyk</mat-label>
-<mat-select [(ngModel)]="userData.preferred_language"  name="preferredLanguage" [compareWith]="compareObjects">
-   
-    <mat-option *ngFor="let l of data.preferredLanguages"  [value]="l">{{l.desc}} </mat-option>
 
-  </mat-select>
-</mat-form-field><br/>
 
-  <mat-form-field *ngIf="allowJobCatChanges" >
+  <mat-form-field *ngIf="allowJobCatChanges && data.user=='APPCLOUD'">
     <mat-label>Výpůjčka ntb</mat-label>
   <mat-select [(ngModel)]="userData.job_category" name="JobCategory" [compareWith]="compareObjects">
    
@@ -42,8 +35,6 @@
 </mat-form-field><br/>
 
     
-  
-      
    
 </div>
 
@@ -59,6 +50,9 @@
     <button mat-flat-button color="secondary" *ngFor="let r of suggestedNoteRemovals" (click)="removeException(r)">Odebrat</button>
  
 </div>
+
+<p>{{message}}</p>
+
 <mat-card-actions align="end">
     <button mat-flat-button color="primary" (click)="save()">Uložit</button>
 
@@ -66,6 +60,10 @@
 
 
 </mat-card>
+
+
+
+
 
 <h2>{{data?.language?.addresses}}</h2>
 
@@ -157,7 +155,37 @@
 
 </ng-container>
 
+<h2>{{data?.language?.preferredLanguage}}</h2>
 
+<ng-container>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header >
+            <mat-panel-title>
+                 {{userData.preferred_language.desc}}
+            </mat-panel-title>
+            <mat-panel-description>
+             
+
+            </mat-panel-description>
+
+           
+        </mat-expansion-panel-header>
+       
+        <mat-form-field >
+            <mat-label>Jazyk</mat-label>
+        <mat-select [(ngModel)]="userData.preferred_language"  name="preferredLanguage" [compareWith]="compareObjects">
+           
+            <mat-option *ngFor="let l of data.preferredLanguages"  [value]="l">{{l.desc}} </mat-option>
+        
+          </mat-select>
+        </mat-form-field><br/>
+        <button mat-flat-button color="primary" (click)="save()">Uložit</button>
+
+    </mat-expansion-panel>
+
+
+</ng-container>
 
 
 

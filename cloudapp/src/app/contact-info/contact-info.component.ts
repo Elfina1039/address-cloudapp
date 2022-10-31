@@ -20,6 +20,9 @@ export class ContactInfoComponent implements OnInit, OnDestroy {
     //testers allowed to access the "exception function"
     testers = ["APPCLOUD", "ADMIN", "UKN_DROBIKOVA", "UKN_SIVAKOVA"];
     
+exceptions : boolean = false;
+message : string = "";
+
   loading = false;
   userData: any; 
   userLink : string;
@@ -177,14 +180,13 @@ console.log("contact info init");
       
         }
 
-        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("PF")){
+        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("FF") && this.data.user=="APPCLOUD"){
           this.allowJobCatChanges = true;
+          this.exceptions = true;
           console.log("FF user");
     
       }
         
-        
-      
         
     }
     
@@ -194,12 +196,17 @@ console.log("contact info init");
             let group = this.data.groupChanges[n];
             this.suggestedGroups.push({exception:n, group:group});
         }
+
+        if(this.suggestedGroups.length>0){
+          this.exceptions = true;
+        }
         
     }
     
      suggestExcRemoval(exception : string){
     
          this.suggestedNoteRemovals.push(exception); 
+         this.exceptions = true;
     }
     
     findException(exceptions : any){
@@ -239,6 +246,8 @@ console.log("contact info init");
         let rgx = new RegExp("; ?"+r);
         this.note.note_text=this.note.note_text.replace(rgx,""); 
         this.suggestedNoteRemovals=[];
+        this.message = "Výjimka odebrána. Uložit?";
+        
     }
     
   parseNote(note:any){
@@ -397,6 +406,12 @@ console.log("contact info init");
         
           ref.suggestedNoteRemovals = [];
         ref.suggestedGroups = [];
+        ref.message = "";
+
+        if(ref.data.currentlyAtLibCode.match("PF")){
+          ref.checkNotes(ref.userData.user_note);
+        } 
+       
       },
       error: (e: RestErrorResponse) => {
         this.alert.error('Failed to update data: ' + e.message);
