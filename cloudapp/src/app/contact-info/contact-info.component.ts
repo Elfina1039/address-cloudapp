@@ -180,7 +180,7 @@ console.log("contact info init");
       
         }
 
-        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("FF") && this.data.user=="APPCLOUD"){
+        if(units.indexOf("FF")!=-1 && this.data.currentlyAtLibCode.match("FF") ){
           this.allowJobCatChanges = true;
           this.exceptions = true;
           console.log("FF user");
