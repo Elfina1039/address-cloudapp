@@ -38,7 +38,7 @@ preferredLanguages : ValDesc[] = [
 ];
 
 jobCats : ValDesc[] = [
-  {value:"Notebooky FF", desc:"Notebooky FF"},
+  {value:"notebook", desc:"Notebooky FF"},
   {value:"", desc:""}
 
 ];
