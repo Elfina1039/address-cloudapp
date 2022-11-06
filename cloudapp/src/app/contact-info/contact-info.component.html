@@ -13,7 +13,7 @@
 </p>
 
 
-  <mat-form-field *ngIf="allowJobCatChanges && data.user=='APPCLOUD'">
+  <mat-form-field *ngIf="allowJobCatChanges">
     <mat-label>Výpůjčka ntb</mat-label>
   <mat-select [(ngModel)]="userData.job_category" name="JobCategory" [compareWith]="compareObjects">
    
